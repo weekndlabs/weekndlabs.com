@@ -33,7 +33,7 @@ export default function Home() {
             description="The semantic core for agentic AI. Reduces 30–90% of token noise from CLI output. MCP server distillation engine powered by Zig + Wasm."
             badgeLabel="ON-GOING"
             tags={['Zig', 'Wasm', 'MCP', 'Agent Infrastructure']}
-            linkHref="https://omni-nine-rho.vercel.app"
+            linkHref="https://omni.weekndlabs.com"
           />
           <Card 
             title="ForgePod"
