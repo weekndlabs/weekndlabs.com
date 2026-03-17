@@ -18,13 +18,13 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekndlabs.com'),
   title: 'WeekndLabs | Agents run here.',
-  description: 'Open-source infrastructure and tools for the agentic AI era. Built in the open. Shipped to production.',
+  description: 'Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.',
   keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents'],
   authors: [{ name: 'WeekndLabs' }],
   creator: 'WeekndLabs',
   openGraph: {
     title: 'WeekndLabs | Agents run here.',
-    description: 'Open-source infrastructure and tools for the agentic AI era. Built in the open. Shipped to production.',
+    description: 'Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.',
     url: 'https://weekndlabs.com',
     siteName: 'WeekndLabs',
     locale: 'en_US',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'WeekndLabs | Agents run here.',
-    description: 'Open-source infrastructure and tools for the agentic AI era.',
+    description: 'Foundational infrastructure and tools for the agentic AI era.',
     creator: '@weekndlabs',
   },
   robots: {

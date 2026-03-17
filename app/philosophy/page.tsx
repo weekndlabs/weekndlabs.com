@@ -2,7 +2,7 @@ import { SectionFadeIn } from '@/components/SectionFadeIn';
 
 export const metadata = {
   title: 'Philosophy | WeekndLabs',
-  description: 'Why we build in the open. Our commitment to open-source agentic AI infrastructure.',
+  description: 'Engineering for builders. Our commitment to radical transparency and high-performance agentic AI infrastructure.',
 };
 
 export default function Philosophy() {
@@ -13,15 +13,15 @@ export default function Philosophy() {
           Philosophy<span className="text-accent-cyan">.</span>
         </h1>
         <h2 className="text-lg md:text-xl text-text-muted mb-8">
-          Why we build in the open.
+          Engineering for builders.
         </h2>
 
         <div className="space-y-6 text-text-secondary leading-relaxed">
           <p>
-            AI is eating software. Agents are eating AI. The infrastructure layer for agentic systems is where the next decade of value lives. We&apos;re building it out of Southeast Asia, and we&apos;re building it <strong className="text-text-primary">open</strong>.
+            AI is eating software. Agents are eating AI. The infrastructure layer for agentic systems is where the next decade of value lives. We&apos;re building it out of Southeast Asia, and we&apos;re building it with <strong className="text-text-primary">radical transparency</strong>.
           </p>
           <p>
-            We believe that foundational developer tools should not be gated behind arbitrary paywalls or opaque enterprise sales calls. Open source is not just a distribution strategy for us—it&apos;s a strict commitment to the builders who trust our stack.
+            We believe that foundational developer tools should be transparent, portable, and owned by the builders who use them. This is not just a strategy—it&apos;s a commitment to infrastructure sovereignty for the agentic era.
           </p>
         </div>
       </SectionFadeIn>
@@ -34,8 +34,8 @@ export default function Philosophy() {
           <li className="flex gap-4 items-start">
             <span className="text-accent-cyan mt-1 shrink-0">{"->"}</span>
             <div>
-              <strong className="text-text-primary font-mono block mb-1">Raw, Unfiltered Open Source</strong>
-              We do not build &quot;open core&quot;. We do not hold back features for an invisible enterprise edition. If we build it, we ship it open. What you see is what you get.
+              <strong className="text-text-primary font-mono block mb-1">Transparent & Portable</strong>
+              We believe you should own your infrastructure. No black boxes. No hidden enterprise editions. High-performance code that is fully transparent, portable, and ready for production.
             </div>
           </li>
           <li className="flex gap-4 items-start">

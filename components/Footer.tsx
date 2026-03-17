@@ -8,7 +8,7 @@ export const Footer = () => {
         
         <div>
           <p className="font-mono text-sm text-text-muted">
-            &copy; 2026 WeekndLabs. Open Source.
+            &copy; 2026 WeekndLabs.
           </p>
         </div>
 

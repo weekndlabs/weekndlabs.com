@@ -10,7 +10,7 @@ export default function Home() {
           Agents run here.
         </h1>
         <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-          Open-source infrastructure and tools for the agentic AI era. Built in the open. Shipped to production.
+          Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
@@ -53,9 +53,9 @@ export default function Home() {
       </SectionFadeIn>
 
       <SectionFadeIn id="philosophy" className="px-6 max-w-4xl mx-auto w-full text-center py-8">
-        <h2 className="text-2xl font-mono text-text-primary mb-6">Built in the open.</h2>
+        <h2 className="text-2xl font-mono text-text-primary mb-6">Engineering for builders.</h2>
         <p className="text-text-secondary mb-8">
-          We believe that foundational developer tools should not be gated behind arbitrary paywalls. 
+          We believe that the best developer tools are built with radical transparency and deep empathy for the people using them.
         </p>
         <div className="flex justify-center">
           <Button href="/philosophy" variant="outlined">

@@ -1,6 +1,6 @@
 # WeekndLabs
 
-> **Agents run here.** Open-source infrastructure and tools for the agentic AI era. Built in the open. Shipped to production.
+> **Agents run here.** Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.
 
 WeekndLabs is an open-source agentic AI lab building foundational developer tools that run directly on your machines. No VC roadmap theater, no opaque enterprise sales calls, and no bullshit.
 

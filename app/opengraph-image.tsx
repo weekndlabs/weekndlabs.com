@@ -57,7 +57,7 @@ export default async function Image() {
         >
           <span>Agents run here.</span>
           <span style={{ color: '#525252', fontSize: '30px', marginTop: '40px' }}>
-            Open-source infrastructure and tools for the agentic AI era.
+            Foundational infrastructure and tools for the agentic AI era.
           </span>
         </div>
       </div>
