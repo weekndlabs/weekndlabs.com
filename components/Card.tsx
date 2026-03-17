@@ -55,7 +55,7 @@ export const Card: React.FC<CardProps> = ({
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-auto">
           {tags.map((tag, idx) => (
-            <span key={idx} className="font-mono text-xs text-text-muted border border-border px-2 py-1 rounded-sm bg-background group-hover:border-accent-cyan/30 transition-colors">
+            <span key={idx} className="font-mono text-xs text-text-muted border border-border px-2 py-1 rounded-sm bg-background group-hover:border-accent-cyan/30 group-hover:text-accent-cyan transition-colors">
               [{tag}]
             </span>
           ))}
