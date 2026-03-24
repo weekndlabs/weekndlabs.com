@@ -20,12 +20,12 @@ export const Navbar = () => {
           <Link href="/philosophy" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
             Philosophy
           </Link>
-          <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
-            GitHub
-          </a>
         </div>
 
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
+          <Button variant="outlined" href="https://github.com/sponsors/fajarhide" className="hidden sm:inline-flex border-accent-amber text-accent-amber hover:bg-accent-amber hover:text-background">
+            Sponsor
+          </Button>
           <Button variant="outlined" href="https://github.com/weekndlabs">
             Star on GitHub
           </Button>

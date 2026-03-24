@@ -7,17 +7,17 @@ export default function Home() {
     <div className="flex flex-col gap-32 pb-24 top-0 relative">
       <SectionFadeIn className="pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
         <h1 className="text-5xl md:text-7xl font-mono text-text-primary mb-6 leading-tight tracking-tight">
-          Agents run here.
+          Reliable infrastructure for the agentic era.
         </h1>
         <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
-          Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.
+          High-performance tools built for developers building the future of automated intelligence. Shipped to production.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center w-full sm:w-auto">
+        <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
             Explore Products
           </Button>
-          <Button href="https://github.com/weekndlabs" variant="outlined">
-            View on GitHub
+          <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="sm:hidden border-accent-amber text-accent-amber hover:bg-accent-amber hover:text-background">
+            Sponsor
           </Button>
         </div>
       </SectionFadeIn>
@@ -30,10 +30,15 @@ export default function Home() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card 
             title="Omni"
-            description="The semantic core for agentic AI. Reduces 30–90% of token noise from CLI output. MCP server distillation engine powered by Zig + Wasm."
+            description="High-performance semantic filter for agentic AI. Reduces 30–90% of token noise by stripping non-essential CLI output. Built in Rust for zero-latency context management."
             badgeLabel="ON-GOING"
+<<<<<<< HEAD
             tags={['Zig', 'Wasm', 'MCP', 'Agent Infrastructure']}
             linkHref="https://omni.weekndlabs.com"
+=======
+            tags={['Rust', 'CLI', 'MCP', 'Context Management']}
+            linkHref="https://omni-nine-rho.vercel.app"
+>>>>>>> 7decf0a (feat: Update homepage marketing copy, introduce sponsor links and buttons, and refine Omni product details.)
           />
           <Card 
             title="ForgePod"
