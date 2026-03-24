@@ -32,13 +32,8 @@ export default function Home() {
             title="Omni"
             description="High-performance semantic filter for agentic AI. Reduces 30–90% of token noise by stripping non-essential CLI output. Built in Rust for zero-latency context management."
             badgeLabel="ON-GOING"
-<<<<<<< HEAD
-            tags={['Zig', 'Wasm', 'MCP', 'Agent Infrastructure']}
-            linkHref="https://omni.weekndlabs.com"
-=======
             tags={['Rust', 'CLI', 'MCP', 'Context Management']}
-            linkHref="https://omni-nine-rho.vercel.app"
->>>>>>> 7decf0a (feat: Update homepage marketing copy, introduce sponsor links and buttons, and refine Omni product details.)
+            linkHref="https://omni.weekndlabs.com"
           />
           <Card 
             title="ForgePod"
