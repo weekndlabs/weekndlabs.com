@@ -14,7 +14,7 @@ export const Navbar = () => {
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          <Link href="#products" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/#products" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
             Products
           </Link>
           <Link href="/philosophy" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">

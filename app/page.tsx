@@ -4,12 +4,12 @@ import { SectionFadeIn } from '@/components/SectionFadeIn';
 
 export default function Home() {
   return (
-    <div className="flex flex-col gap-32 pb-24 top-0 relative">
-      <SectionFadeIn className="pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
-        <h1 className="text-5xl md:text-7xl font-mono text-text-primary mb-6 leading-tight tracking-tight">
+    <div className="flex flex-col gap-16 md:gap-32 pb-16 md:pb-24 top-0 relative">
+      <SectionFadeIn className="pt-16 md:pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-mono text-text-primary mb-6 leading-tight tracking-tight">
           Reliable infrastructure for the agentic era.
         </h1>
-        <p className="text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-10 leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
           High-performance tools built for developers building the future of automated intelligence. Shipped to production.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
@@ -22,18 +22,25 @@ export default function Home() {
         </div>
       </SectionFadeIn>
 
-      <SectionFadeIn id="products" className="px-6 max-w-7xl mx-auto w-full">
-        <div className="mb-12">
-          <h2 className="text-3xl font-mono text-text-primary mb-4">Our Products</h2>
+      <SectionFadeIn id="products" className="px-6 max-w-4xl mx-auto w-full">
+        <div className="mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-mono text-text-primary mb-4">Our Products</h2>
           <div className="h-px w-24 bg-border"></div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <Card 
             title="Omni"
-            description="High-performance semantic filter for agentic AI. Reduces 30–90% of token noise by stripping non-essential CLI output. Built in Rust for zero-latency context management."
+            description="The Semantic Signal Engine that reduce AI token consumption by up to 90%."
             badgeLabel="ON-GOING"
             tags={['Rust', 'CLI', 'MCP', 'Context Management']}
             linkHref="https://omni.weekndlabs.com"
+          />
+          <Card 
+            title="Heimsense"
+            description="Unlock Your Claude Code for Any LLM."
+            badgeLabel="ON-GOING"
+            tags={['Go', 'CLI', 'Proxy', 'AI', 'API-Adapter','Configuration']}
+            linkHref="https://github.com/fajarhide/heimsense"
           />
           <Card 
             title="ForgePod"

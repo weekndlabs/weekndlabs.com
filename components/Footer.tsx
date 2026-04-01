@@ -14,7 +14,7 @@ export const Footer = () => {
 
         <div className="flex-grow flex justify-center text-center">
           <p className="font-mono text-sm text-text-muted">
-            Built from Bandung, Indonesia 🇮🇩 — shipped to the world.
+            Built from Indonesia 🇮🇩 shipped to the world.
           </p>
         </div>
 
