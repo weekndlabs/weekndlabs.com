@@ -30,23 +30,23 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <Card 
             title="Omni"
-            description="The Semantic Signal Engine that reduce AI token consumption by up to 90%."
+            description="Give AI agents perfect memory. Turn noisy development sessions into structured, reusable context, reduce token consume upto 79%."
             badgeLabel="ON-GOING"
-            tags={['Rust', 'CLI', 'MCP', 'Context Management']}
+            tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
           <Card 
             title="Heimsense"
             description="Unlock Your Claude Code for Any LLM."
             badgeLabel="ON-GOING"
-            tags={['Go', 'CLI', 'Proxy', 'AI', 'API-Adapter','Configuration']}
+            tags={['Go', 'Proxy', 'Router', 'API-Adapter', '9Router']}
             linkHref="https://github.com/fajarhide/heimsense"
           />
           <Card 
             title="ForgePod"
-            description="Lightweight self-hosted PaaS powered by Podman. Ship containers like Heroku. Own your infrastructure like a pro. No Docker daemon. No vendor lock-in."
+            description="From idea to Product-Market Fit. ForgePod helps founders validate assumptions, build MVPs, measure real user behavior, and learn faster through an AI-guided startup workflow."
             badgeLabel="ON-GOING"
-            tags={['Go', 'Podman', 'Self-hosted', 'PaaS']}
+            tags={['AI', 'Product-Market Fit', 'Lean Startup', 'MVP', 'Growth', 'SaaS']}
             linkHref="https://forgepod.dev"
           />
           <Card 
