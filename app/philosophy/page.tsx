@@ -9,8 +9,8 @@ export default function Philosophy() {
   return (
     <div className="flex flex-col gap-16 py-32 px-6 max-w-4xl mx-auto w-full">
       <SectionFadeIn>
-        <h1 className="text-4xl md:text-5xl font-mono text-text-primary mb-4 leading-tight">
-          Philosophy<span className="text-accent-cyan">.</span>
+        <h1 className="text-4xl md:text-5xl font-display text-text-primary mb-4 leading-tight">
+          Philosophy<span className="text-accent">.</span>
         </h1>
         <h2 className="text-lg md:text-xl text-text-muted mb-8">
           Engineering for builders.
@@ -27,26 +27,26 @@ export default function Philosophy() {
       </SectionFadeIn>
 
       <SectionFadeIn>
-        <h3 className="text-2xl font-mono text-text-primary mb-4">
-          The Commitments<span className="text-accent-cyan">.</span>
+        <h3 className="text-2xl font-display text-text-primary mb-4">
+          The Commitments<span className="text-accent">.</span>
         </h3>
         <ul className="space-y-8 text-text-secondary list-none pl-0">
           <li className="flex gap-4 items-start">
-            <span className="text-accent-cyan mt-1 shrink-0">{"->"}</span>
+            <span className="text-accent mt-1 shrink-0">{"->"}</span>
             <div>
               <strong className="text-text-primary font-mono block mb-1">Transparent & Portable</strong>
               You own your infrastructure. There is no black box and no hidden enterprise edition holding back the parts that matter. Everything we run ourselves is the same code you download.
             </div>
           </li>
           <li className="flex gap-4 items-start">
-            <span className="text-accent-cyan mt-1 shrink-0">{"->"}</span>
+            <span className="text-accent mt-1 shrink-0">{"->"}</span>
             <div>
               <strong className="text-text-primary font-mono block mb-1">Builder-First Empathy</strong>
               We build tools we actually want to use. We prioritize CLI ergonomics, low-latency, predictability, and local-first workflows over marketing metrics.
             </div>
           </li>
           <li className="flex gap-4 items-start">
-            <span className="text-accent-cyan mt-1 shrink-0">{"->"}</span>
+            <span className="text-accent mt-1 shrink-0">{"->"}</span>
             <div>
               <strong className="text-text-primary font-mono block mb-1">Permissive Licensing</strong>
               We strictly release under the MIT or Apache 2.0 license. Fork it, learn from it, run it in production. You own your infrastructure without strings attached.
@@ -56,8 +56,8 @@ export default function Philosophy() {
       </SectionFadeIn>
 
       <SectionFadeIn>
-        <h3 className="text-2xl font-mono text-text-primary mb-4">
-          How We Sustain This<span className="text-accent-cyan">.</span>
+        <h3 className="text-2xl font-display text-text-primary mb-4">
+          How We Sustain This<span className="text-accent">.</span>
         </h3>
         <div className="space-y-6 text-text-secondary leading-relaxed mb-10">
           <p>
@@ -65,14 +65,14 @@ export default function Philosophy() {
           </p>
           <ul className="space-y-4 list-none pl-0">
              <li className="flex gap-4 items-start">
-              <span className="text-accent-cyan mt-1 shrink-0">01</span>
+              <span className="text-accent mt-1 shrink-0">01</span>
               <div>
                 <strong className="text-text-primary block">Managed Cloud Services</strong>
                 For teams who would rather not run this themselves, we offer hosted versions of our tools. The self-hosted build stays complete either way.
               </div>
             </li>
             <li className="flex gap-4 items-start">
-              <span className="text-accent-cyan mt-1 shrink-0">02</span>
+              <span className="text-accent mt-1 shrink-0">02</span>
               <div>
                 <strong className="text-text-primary block">Community Sponsorships</strong>
                 Support directly from the engineers who rely on our tools via GitHub Sponsors or direct contributions.
@@ -82,7 +82,7 @@ export default function Philosophy() {
         </div>
         
         <div className="flex flex-col sm:flex-row gap-4">
-          <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-sm border border-border bg-surface hover:border-accent-cyan/50 hover:text-accent-cyan transition-colors rounded-sm">
+          <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-sm border border-border bg-surface hover:border-accent/50 hover:text-accent transition-colors rounded-sm">
             <span>Sponsor on GitHub</span>
             <span className="text-text-muted text-xs">{"->"}</span>
           </a>

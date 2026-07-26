@@ -4,16 +4,16 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'WeekndLabs',
     short_name: 'WeekndLabs',
-    description: 'Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.',
+    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products, open source, built in Indonesia.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#080808',
-    theme_color: '#080808',
+    background_color: '#12141F',
+    theme_color: '#12141F',
     icons: [
       {
-        src: '/favicon.ico',
+        src: '/logo.svg',
         sizes: 'any',
-        type: 'image/x-icon',
+        type: 'image/svg+xml',
       },
     ],
   };

@@ -8,25 +8,33 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      // Shared with bubo-site's dark theme, token for token, so the two sites
+      // read as one house. Amber is the through-line across the family: it is
+      // Bubo's eyes and Omni's phosphor, which is why it replaced the old cyan.
       colors: {
-        background: "#080808",
-        surface: "#111111",
+        background: "#12141F",
+        surface: "#1A1D2B",
+        card: "#1E2333",
         accent: {
-          cyan: "#00FFD1",
-          amber: "#FFB800",
+          DEFAULT: "#F5B841",
+          bright: "#FCD670",
         },
         border: {
-          DEFAULT: "#1E1E1E",
+          DEFAULT: "#2A3048",
+          soft: "#21273A",
         },
         text: {
-          primary: "#F0F0F0",
-          secondary: "#888888",
-          muted: "#444444",
+          primary: "#ECEEF5",
+          secondary: "#8A90A6",
+          muted: "#565D75",
         }
       },
       fontFamily: {
-        mono: ['var(--font-jetbrains)', 'monospace'],
-        sans: ['var(--font-geist)', 'sans-serif'],
+        // Omni's rule, adopted here: mono means a machine emitted it, sans means
+        // a person wrote it. Headings are people talking, so they are display.
+        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       borderRadius: {
         sm: '2px',

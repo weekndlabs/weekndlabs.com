@@ -7,10 +7,10 @@ interface BadgeProps {
 }
 
 export const Badge: React.FC<BadgeProps> = ({ label, variant = 'status', className = '' }) => {
-  const dotColor = variant === 'status' ? 'bg-green-500' : 'bg-accent-amber';
-  const textColor = variant === 'status' ? 'text-text-secondary' : 'text-accent-amber';
-  const borderClass = variant === 'status' ? 'border-border' : 'border-accent-amber/30';
-  const bgClass = variant === 'status' ? 'bg-surface' : 'bg-accent-amber/10';
+  const dotColor = variant === 'status' ? 'bg-green-500' : 'bg-accent-bright';
+  const textColor = variant === 'status' ? 'text-text-secondary' : 'text-accent-bright';
+  const borderClass = variant === 'status' ? 'border-border' : 'border-accent-bright/30';
+  const bgClass = variant === 'status' ? 'bg-surface' : 'bg-accent-bright/10';
 
   return (
     <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-sm border ${borderClass} ${bgClass} ${className}`}>

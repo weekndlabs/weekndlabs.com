@@ -18,7 +18,7 @@ export default async function Image() {
       // ImageResponse JSX element
       <div
         style={{
-          background: '#080808',
+          background: '#12141F',
           width: '100%',
           height: '100%',
           display: 'flex',
@@ -26,7 +26,7 @@ export default async function Image() {
           alignItems: 'flex-start',
           justifyContent: 'center',
           padding: '80px',
-          border: '10px solid #1E1E1E',
+          border: '10px solid #2A3048',
           fontFamily: 'monospace',
         }}
       >
@@ -41,9 +41,9 @@ export default async function Image() {
             lineHeight: 1,
           }}
         >
-          <span style={{ color: '#00FFD1', marginRight: '30px' }}>{'>'}</span>
+          <span style={{ color: '#F5B841', marginRight: '30px' }}>{'>'}</span>
           WeekndLabs
-          <span style={{ color: '#00FFD1' }}>_</span>
+          <span style={{ color: '#F5B841' }}>_</span>
         </div>
         <div
           style={{

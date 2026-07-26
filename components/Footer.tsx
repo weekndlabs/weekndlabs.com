@@ -19,7 +19,7 @@ export const Footer = () => {
         </div>
 
         <div className="flex flex-wrap justify-center gap-6">
-          <a href="https://github.com/sponsors/fajarhide" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-accent-amber hover:opacity-80 transition-opacity">
+          <a href="https://github.com/sponsors/fajarhide" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-accent-bright hover:opacity-80 transition-opacity">
             Sponsor
           </a>
           <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
