@@ -1,6 +1,7 @@
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
+import { totalStars, starClause } from '@/lib/stars';
 
 export const revalidate = 3600;
 
@@ -33,12 +34,9 @@ async function getRepoStars(repo: string): Promise<number | null> {
   }
 }
 
-// Sum across the public product repos. Returns null if any lookup fails, so we
-// never render a total that silently under-counts.
+// Aggregation rule and its test live in lib/stars.js.
 async function getTotalStars(): Promise<number | null> {
-  const counts = await Promise.all(PRODUCT_REPOS.map(getRepoStars));
-  if (counts.some((c) => c === null)) return null;
-  return counts.reduce((sum: number, c) => sum + c!, 0);
+  return totalStars(await Promise.all(PRODUCT_REPOS.map(getRepoStars)));
 }
 
 async function getLatestCommit(repo: string): Promise<Activity | null> {
@@ -81,8 +79,8 @@ export default async function Home() {
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
           Five tools running in production: agent context, LLM routing, pull request automation,
-          macOS performance, and founder workflow. Open source under MIT and Apache 2.0,
-          with {stars ?? '300+'} stars on GitHub.
+          macOS performance, and founder workflow. Open source under MIT and Apache 2.0
+          {starClause(stars)}.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
