@@ -18,13 +18,13 @@ const ibmPlexMono = IBM_Plex_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekndlabs.com'),
   title: 'WeekndLabs | Agents run here.',
-  description: 'Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.',
-  keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents'],
+  description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9%, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+  keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Omni', 'Claude Code', 'token optimization', 'MCP'],
   authors: [{ name: 'WeekndLabs' }],
   creator: 'WeekndLabs',
   openGraph: {
     title: 'WeekndLabs | Agents run here.',
-    description: 'Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.',
+    description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9%, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
     url: 'https://weekndlabs.com',
     siteName: 'WeekndLabs',
     locale: 'en_US',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'WeekndLabs | Agents run here.',
-    description: 'Foundational infrastructure and tools for the agentic AI era.',
+    description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9% on a real command mix.',
     creator: '@weekndlabs',
   },
   robots: {

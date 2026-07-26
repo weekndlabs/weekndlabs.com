@@ -18,10 +18,10 @@ export default function Philosophy() {
 
         <div className="space-y-6 text-text-secondary leading-relaxed">
           <p>
-            AI is eating software. Agents are eating AI. The infrastructure layer for agentic systems is where the next decade of value lives. We&apos;re building it out of Southeast Asia, and we&apos;re building it with <strong className="text-text-primary">radical transparency</strong>.
+            Agents are becoming the way a lot of software gets written, and the tooling underneath them is still thin. We build that layer out of Southeast Asia with <strong className="text-text-primary">radical transparency</strong>: the benchmarks on this site are numbers you can reproduce from the repo, not numbers we liked the sound of.
           </p>
           <p>
-            We believe that foundational developer tools should be transparent, portable, and owned by the builders who use them. This is not just a strategy—it&apos;s a commitment to infrastructure sovereignty for the agentic era.
+            Developer tools should be transparent, portable, and owned by the people who use them. That means you can read the code, fork it, and run it in production without asking us first.
           </p>
         </div>
       </SectionFadeIn>
@@ -35,7 +35,7 @@ export default function Philosophy() {
             <span className="text-accent-cyan mt-1 shrink-0">{"->"}</span>
             <div>
               <strong className="text-text-primary font-mono block mb-1">Transparent & Portable</strong>
-              We believe you should own your infrastructure. No black boxes. No hidden enterprise editions. High-performance code that is fully transparent, portable, and ready for production.
+              You own your infrastructure. There is no black box and no hidden enterprise edition holding back the parts that matter. Everything we run ourselves is the same code you download.
             </div>
           </li>
           <li className="flex gap-4 items-start">
@@ -68,7 +68,7 @@ export default function Philosophy() {
               <span className="text-accent-cyan mt-1 shrink-0">01</span>
               <div>
                 <strong className="text-text-primary block">Managed Cloud Services</strong>
-                For teams who prefer not to manage infrastructure, we provide fully-managed, hosted versions of our networking and deployment tools.
+                For teams who would rather not run this themselves, we offer hosted versions of our tools. The self-hosted build stays complete either way.
               </div>
             </li>
             <li className="flex gap-4 items-start">

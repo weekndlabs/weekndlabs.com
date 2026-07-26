@@ -2,42 +2,110 @@ import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
 
-export default function Home() {
+export const revalidate = 3600;
+
+// Public repos we surface commits from. ForgePod is private, so it has no feed.
+const ACTIVITY_REPOS = [
+  'fajarhide/omni',
+  'fajarhide/heimsense',
+  'fajarhide/bubo',
+  'fajarhide/ai-pr-describer',
+  'weekndlabs/weekndlabs.com',
+];
+
+type CommitResponse = { commit: { message: string; author: { date: string } } }[];
+
+type Activity = { message: string; repo: string; date: string };
+
+async function getOmniStars(): Promise<number | null> {
+  try {
+    const res = await fetch('https://api.github.com/repos/fajarhide/omni', {
+      headers: { Accept: 'application/vnd.github+json' },
+      next: { revalidate },
+    });
+    if (!res.ok) return null;
+    const { stargazers_count } = (await res.json()) as { stargazers_count?: number };
+    return typeof stargazers_count === 'number' ? stargazers_count : null;
+  } catch {
+    return null;
+  }
+}
+
+async function getLatestCommit(repo: string): Promise<Activity | null> {
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=1`, {
+      headers: { Accept: 'application/vnd.github+json' },
+      next: { revalidate },
+    });
+    if (!res.ok) return null;
+    const commits = (await res.json()) as CommitResponse;
+    if (!Array.isArray(commits) || commits.length === 0) return null;
+    const { message, author } = commits[0].commit;
+    return { message: message.split('\n')[0], repo, date: author.date };
+  } catch {
+    return null;
+  }
+}
+
+async function getActivity(): Promise<Activity[]> {
+  const commits = await Promise.all(ACTIVITY_REPOS.map(getLatestCommit));
+  return commits
+    .filter((c): c is Activity => c !== null)
+    .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+    .slice(0, 3);
+}
+
+function ago(iso: string) {
+  const days = Math.round((Date.parse(iso) - Date.now()) / 86_400_000);
+  return new Intl.RelativeTimeFormat('en', { numeric: 'auto' }).format(days, 'day');
+}
+
+export default async function Home() {
+  const [stars, activity] = await Promise.all([getOmniStars(), getActivity()]);
+
   return (
     <div className="flex flex-col gap-16 md:gap-32 pb-16 md:pb-24 top-0 relative">
       <SectionFadeIn className="pt-16 md:pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-mono text-text-primary mb-6 leading-tight tracking-tight">
-          Reliable infrastructure for the agentic era.
+          Your terminal is what makes AI agents expensive.
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          High-performance tools built for developers building the future of automated intelligence. Shipped to production.
+          Omni strips the build logs, progress bars and ANSI noise before your agent ever reads them.
+          58.9% fewer tokens on a real command mix, {stars ?? '300+'} stars on GitHub, MIT licensed.
+          It is one of five tools we build here, in the open, from Indonesia.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
-            Explore Products
+            See the tools
           </Button>
           <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="sm:hidden border-accent-amber text-accent-amber hover:bg-accent-amber hover:text-background">
             Sponsor
           </Button>
         </div>
+        <div className="mt-8 md:mt-10 w-full max-w-md">
+          <p className="font-mono text-xs text-text-muted mb-2 text-left">install omni</p>
+          <pre className="border border-border bg-surface rounded p-4 font-mono text-sm text-accent-cyan overflow-x-auto text-left">
+            <code>brew install fajarhide/tap/omni</code>
+          </pre>
+        </div>
       </SectionFadeIn>
 
       <SectionFadeIn id="products" className="px-6 max-w-4xl mx-auto w-full">
         <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-mono text-text-primary mb-4">Our Products</h2>
+          <h2 className="text-2xl md:text-3xl font-mono text-text-primary mb-4">What we ship</h2>
           <div className="h-px w-24 bg-border"></div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
-          <Card 
+          <Card
             title="Omni"
-            description="Give AI agents perfect memory. Turn noisy development sessions into structured, reusable context, reduce token consume upto 79%."
+            description="Noise-canceling context and long-term memory for AI agents. Cuts a real command mix by 58.9%, leaves JSON and YAML untouched, and passes failing commands through verbatim so no error ever gets compressed away."
             badgeLabel="SHIPPED v0.6.6"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
-          <Card 
+          <Card
             title="Heimsense"
-            description="Unlock Your Claude Code for Any LLM."
+            description="Point Claude Code at any LLM. A Go proxy that routes your agent traffic to whichever model you actually want to pay for."
             badgeLabel="SHIPPED v0.1.3"
             tags={['Go', 'Proxy', 'Router', 'API-Adapter', '9Router']}
             linkHref="https://github.com/fajarhide/heimsense"
@@ -51,14 +119,14 @@ export default function Home() {
           />
           <Card
             title="ForgePod"
-            description="From idea to Product-Market Fit. ForgePod helps founders validate assumptions, build MVPs, measure real user behavior, and learn faster through an AI-guided startup workflow."
-            badgeLabel="ON-GOING"
+            description="An AI-guided workflow for founders. Write down the assumption, ship the smallest thing that tests it, then watch what users actually do instead of what they said they would."
+            badgeLabel="SHIPPED Beta MVP"
             tags={['AI', 'Product-Market Fit', 'Lean Startup', 'MVP', 'Growth', 'SaaS']}
             linkHref="https://forgepod.dev"
           />
-          <Card 
+          <Card
             title="AI PR Describer"
-            description="Automated Pull Request descriptions powered by AI. Reads the diff, understands the context, writes descriptions developers actually read."
+            description="Reads the diff and writes the pull request description. Works with any OpenAI-compatible model, installs from the GitHub Actions marketplace in one step."
             badgeLabel="SHIPPED v1.1.4"
             tags={['AI', 'Developer Tools', 'GitHub Actions']}
             linkHref="https://github.com/marketplace/actions/ai-pull-request-describer"
@@ -69,7 +137,7 @@ export default function Home() {
       <SectionFadeIn id="philosophy" className="px-6 max-w-4xl mx-auto w-full text-center py-8">
         <h2 className="text-2xl font-mono text-text-primary mb-6">Engineering for builders.</h2>
         <p className="text-text-secondary mb-8">
-          We believe that the best developer tools are built with radical transparency and deep empathy for the people using them.
+          Every tool here ships under MIT or Apache 2.0. Read the code, fork it, run it in production, and never ask us for permission.
         </p>
         <div className="flex justify-center">
           <Button href="/philosophy" variant="outlined">
@@ -78,41 +146,27 @@ export default function Home() {
         </div>
       </SectionFadeIn>
 
-      <SectionFadeIn id="activity" className="px-6 max-w-4xl mx-auto w-full">
-        <h2 className="text-xl font-mono text-text-primary mb-6">Recent activity</h2>
-        <ul className="border border-border rounded bg-surface divide-y divide-border list-none pl-0">
-          <li className="p-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between font-mono text-sm hover:bg-background transition-colors">
-            <div className="flex items-start gap-4">
-              <span className="text-accent-cyan shrink-0 mt-0.5 sm:mt-0">⚡</span>
-              <span className="text-text-primary">feat(omni): add semantic filter for JSON output</span>
-            </div>
-            <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
-              <span className="px-2 py-0.5 bg-background border border-border rounded text-text-muted text-xs">weekndlabs/omni</span>
-              <span className="text-text-muted text-xs">2 days ago</span>
-            </div>
-          </li>
-          <li className="p-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between font-mono text-sm hover:bg-background transition-colors">
-            <div className="flex items-start gap-4">
-              <span className="text-accent-amber shrink-0 mt-0.5 sm:mt-0">🐛</span>
-              <span className="text-text-primary">fix(forgepod): scheduler race condition on multi-node deploy</span>
-            </div>
-            <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
-              <span className="px-2 py-0.5 bg-background border border-border rounded text-text-muted text-xs">weekndlabs/forgepod</span>
-              <span className="text-text-muted text-xs">5 days ago</span>
-            </div>
-          </li>
-          <li className="p-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between font-mono text-sm hover:bg-background transition-colors">
-            <div className="flex items-start gap-4">
-              <span className="text-accent-cyan shrink-0 mt-0.5 sm:mt-0">⚡</span>
-              <span className="text-text-primary">feat(ai-pr-describer): support GitLab MR format</span>
-            </div>
-            <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
-              <span className="px-2 py-0.5 bg-background border border-border rounded text-text-muted text-xs">weekndlabs/ai-pr-describer</span>
-              <span className="text-text-muted text-xs">1 week ago</span>
-            </div>
-          </li>
-        </ul>
-      </SectionFadeIn>
+      {activity.length > 0 && (
+        <SectionFadeIn id="activity" className="px-6 max-w-4xl mx-auto w-full">
+          <h2 className="text-xl font-mono text-text-primary mb-6">Recent activity</h2>
+          <ul className="border border-border rounded bg-surface divide-y divide-border list-none pl-0">
+            {activity.map((item) => (
+              <li key={`${item.repo}-${item.date}`} className="p-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between font-mono text-sm hover:bg-background transition-colors">
+                <div className="flex items-start gap-4">
+                  <span className={`shrink-0 mt-0.5 sm:mt-0 ${item.message.startsWith('fix') ? 'text-accent-amber' : 'text-accent-cyan'}`}>
+                    {item.message.startsWith('fix') ? '🐛' : '⚡'}
+                  </span>
+                  <span className="text-text-primary">{item.message}</span>
+                </div>
+                <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
+                  <span className="px-2 py-0.5 bg-background border border-border rounded text-text-muted text-xs">{item.repo}</span>
+                  <span className="text-text-muted text-xs">{ago(item.date)}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </SectionFadeIn>
+      )}
 
     </div>
   )
