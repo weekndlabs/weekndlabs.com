@@ -42,7 +42,14 @@ export default function Home() {
             tags={['Go', 'Proxy', 'Router', 'API-Adapter', '9Router']}
             linkHref="https://github.com/fajarhide/heimsense"
           />
-          <Card 
+          <Card
+            title="Bubo"
+            description="Tiny macOS menu-bar monitor that names the app making your Mac heavy and quits it in one click. Apple Silicon & Intel, no daemon."
+            badgeLabel="SHIPPED v1.2"
+            tags={['Swift', 'SwiftUI', 'macOS', 'Menu Bar', 'IOReport', 'SMC']}
+            linkHref="https://bubo.weekndlabs.com"
+          />
+          <Card
             title="ForgePod"
             description="From idea to Product-Market Fit. ForgePod helps founders validate assumptions, build MVPs, measure real user behavior, and learn faster through an AI-guided startup workflow."
             badgeLabel="ON-GOING"
