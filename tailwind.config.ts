@@ -11,22 +11,24 @@ const config: Config = {
       // Shared with bubo-site's dark theme, token for token, so the two sites
       // read as one house. Amber is the through-line across the family: it is
       // Bubo's eyes and Omni's phosphor, which is why it replaced the old cyan.
+      // Values live in globals.css so one token set serves both themes. See the
+      // comment there for why they are triplets and not hex.
       colors: {
-        background: "#12141F",
-        surface: "#1A1D2B",
-        card: "#1E2333",
+        background: "rgb(var(--c-background) / <alpha-value>)",
+        surface: "rgb(var(--c-surface) / <alpha-value>)",
+        card: "rgb(var(--c-card) / <alpha-value>)",
         accent: {
-          DEFAULT: "#F5B841",
-          bright: "#FCD670",
+          DEFAULT: "rgb(var(--c-accent) / <alpha-value>)",
+          bright: "rgb(var(--c-accent-bright) / <alpha-value>)",
         },
         border: {
-          DEFAULT: "#2A3048",
-          soft: "#21273A",
+          DEFAULT: "rgb(var(--c-border) / <alpha-value>)",
+          soft: "rgb(var(--c-border-soft) / <alpha-value>)",
         },
         text: {
-          primary: "#ECEEF5",
-          secondary: "#8A90A6",
-          muted: "#565D75",
+          primary: "rgb(var(--c-text-primary) / <alpha-value>)",
+          secondary: "rgb(var(--c-text-secondary) / <alpha-value>)",
+          muted: "rgb(var(--c-text-muted) / <alpha-value>)",
         }
       },
       fontFamily: {

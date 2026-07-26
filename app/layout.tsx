@@ -54,8 +54,15 @@ export const metadata: Metadata = {
 }
 
 export const viewport = {
-  themeColor: '#12141F',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#FAF8F3' },
+    { media: '(prefers-color-scheme: dark)', color: '#12141F' },
+  ],
 }
+
+// Runs before first paint so a stored choice is applied without a flash of the
+// other theme. No stored choice means the CSS media query decides.
+const themeScript = `try{var t=localStorage.getItem('theme');if(t){document.documentElement.dataset.theme=t}}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -63,7 +70,10 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${jetbrainsMono.variable} ${inter.variable} ${bricolage.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${jetbrainsMono.variable} ${inter.variable} ${bricolage.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      </head>
       <body className="font-sans bg-background text-text-primary min-h-screen flex flex-col">
         <Navbar />
         <main className="flex-grow">

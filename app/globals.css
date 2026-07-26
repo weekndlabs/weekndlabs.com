@@ -2,6 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Tokens are RGB triplets rather than hex so Tailwind's alpha modifiers
+   (border-accent/30, bg-accent-bright/10) still resolve. bubo-site gets the same
+   pairs out of light-dark(), which cannot be used here for exactly that reason.
+
+   Light is the default block and dark is applied two ways: by OS preference when
+   the visitor has not chosen, and by data-theme when they have. The two dark
+   blocks are duplicated on purpose, since CSS has no way to share one. */
+:root {
+  color-scheme: light;
+  --c-background: 250 248 243;
+  --c-surface: 240 236 226;
+  --c-card: 244 240 231;
+  --c-border: 216 209 192;
+  --c-border-soft: 228 222 207;
+  /* Amber deepens on paper. #F5B841 is 1.8:1 on this background and unreadable;
+     these two hold as text. Do not paste the dark values in here. */
+  --c-accent: 156 97 0;
+  --c-accent-bright: 184 116 0;
+  --c-text-primary: 28 30 40;
+  --c-text-secondary: 90 95 112;
+  --c-text-muted: 120 126 144;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --c-background: 18 20 31;
+    --c-surface: 26 29 43;
+    --c-card: 30 35 51;
+    --c-border: 42 48 72;
+    --c-border-soft: 33 39 58;
+    --c-accent: 245 184 65;
+    --c-accent-bright: 252 214 112;
+    --c-text-primary: 236 238 245;
+    --c-text-secondary: 138 144 166;
+    --c-text-muted: 86 93 117;
+  }
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --c-background: 18 20 31;
+  --c-surface: 26 29 43;
+  --c-card: 30 35 51;
+  --c-border: 42 48 72;
+  --c-border-soft: 33 39 58;
+  --c-accent: 245 184 65;
+  --c-accent-bright: 252 214 112;
+  --c-text-primary: 236 238 245;
+  --c-text-secondary: 138 144 166;
+  --c-text-muted: 86 93 117;
+}
+
 @layer base {
   body {
     @apply bg-background font-sans text-text-primary antialiased selection:bg-accent selection:text-background;
