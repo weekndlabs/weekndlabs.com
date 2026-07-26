@@ -86,7 +86,7 @@ export default async function Home() {
           <Button href="#products" variant="filled">
             See the tools
           </Button>
-          <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="sm:hidden">
+          <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="lg:hidden">
             Sponsor
           </Button>
         </div>

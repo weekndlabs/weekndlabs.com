@@ -1,6 +1,12 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  // A touch device fires hover on tap and then leaves it stuck on whatever was
+  // last touched, so a phone shows a hovered nav link the user never hovered.
+  // This gates every hover: utility behind @media (hover: hover).
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
