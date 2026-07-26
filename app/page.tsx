@@ -133,6 +133,13 @@ export default async function Home() {
             tags={['AI', 'Developer Tools', 'GitHub Actions']}
             linkHref="https://github.com/marketplace/actions/ai-pull-request-describer"
           />
+          <Card
+            title="Design System"
+            description="One set of colour, type and spacing tokens behind Omni, Bubo and this site. Three themes fill the same fifteen roles, and a test computes every contrast ratio and fails the build when one drops below WCAG."
+            badgeLabel="SHIPPED v0.1.0"
+            tags={['Design Tokens', 'Style Dictionary', 'WCAG', 'Astro', 'Tailwind']}
+            linkHref="/design"
+          />
         </div>
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
           <p className="font-mono text-xs text-text-muted shrink-0">start with omni</p>
