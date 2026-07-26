@@ -1,6 +1,6 @@
 # WeekndLabs
 
-> **Agents run here.** Foundational infrastructure and tools for the agentic AI era. High-performance. Shipped to production.
+> **Agents run here.** Five shipped developer tools for the agentic era, open source and built in Indonesia.
 
 WeekndLabs is an open-source agentic AI lab building foundational developer tools that run directly on your machines. No VC roadmap theater, no opaque enterprise sales calls, and no bullshit.
 
@@ -12,12 +12,11 @@ We believe that foundational developer tools should not be gated behind arbitrar
 
 ## The Stack
 
-This website itself is built with a pure, raw, builder-first aesthetic using the modern frontend toolchain:
-
 - **Framework**: Next.js 14 (App Router)
-- **Styling**: TailwindCSS
-- **Typography**: [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) (Display) & [Geist](https://vercel.com/font) (Body)
-- **Design System**: Strict Dark Mode (`#080808` background, `#00FFD1` accent)
+- **Styling**: TailwindCSS. Colour tokens live in [`app/globals.css`](app/globals.css) as RGB triplets, so one set serves both themes and Tailwind's alpha modifiers still resolve.
+- **Typography**: [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) for headings, [Inter](https://fonts.google.com/specimen/Inter) for body, [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) for anything a machine emitted: commands, versions, tags, commit subjects.
+- **Themes**: light and dark. Follows the OS by default; the nav toggle overrides it and the choice persists. Amber on navy in the dark, the same amber deepened to hold as text on paper in the light.
+- **Live data**: star counts and recent commits come from the GitHub API on an hourly ISR revalidation. When a lookup fails the page drops the affected line rather than substituting a stale number.
 - **SEO & PWA**: Dynamic Open Graph Images (`next/og`), Native Manifest Generation
 
 ## Local Development
