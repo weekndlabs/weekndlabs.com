@@ -31,14 +31,14 @@ export default function Home() {
           <Card 
             title="Omni"
             description="Give AI agents perfect memory. Turn noisy development sessions into structured, reusable context, reduce token consume upto 79%."
-            badgeLabel="ON-GOING"
+            badgeLabel="SHIPPED v0.6.6"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
           <Card 
             title="Heimsense"
             description="Unlock Your Claude Code for Any LLM."
-            badgeLabel="ON-GOING"
+            badgeLabel="SHIPPED v0.1.3"
             tags={['Go', 'Proxy', 'Router', 'API-Adapter', '9Router']}
             linkHref="https://github.com/fajarhide/heimsense"
           />
@@ -59,7 +59,7 @@ export default function Home() {
           <Card 
             title="AI PR Describer"
             description="Automated Pull Request descriptions powered by AI. Reads the diff, understands the context, writes descriptions developers actually read."
-            badgeLabel="ON-GOING"
+            badgeLabel="SHIPPED v1.1.4"
             tags={['AI', 'Developer Tools', 'GitHub Actions']}
             linkHref="https://github.com/marketplace/actions/ai-pull-request-describer"
           />
