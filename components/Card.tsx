@@ -67,11 +67,14 @@ export const Card: React.FC<CardProps> = ({
   const containerClasses = `group relative bg-surface border border-border rounded p-6 flex flex-col h-full transition-colors duration-300 hover:border-accent/50 block ${className}`;
 
   if (linkHref) {
+    // Internal routes stay in this tab. Only the cards pointing at another site
+    // open a new one, so the same destination behaves the same way whether it is
+    // reached from a card or from the nav.
+    const isExternal = !linkHref.startsWith('/');
     return (
-      <a 
+      <a
         href={linkHref}
-        target="_blank"
-        rel="noopener noreferrer"
+        {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         className={containerClasses}
       >
         {CardContent}

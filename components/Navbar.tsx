@@ -18,6 +18,9 @@ export const Navbar = () => {
           <Link href="/#products" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
             Products
           </Link>
+          <Link href="/design" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+            Design
+          </Link>
           <Link href="/philosophy" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
             Philosophy
           </Link>
