@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   creator: 'WeekndLabs',
   openGraph: {
     title: 'WeekndLabs | Agents run here.',
-    description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9%, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products covering agent context, LLM routing, pull request automation, macOS performance, and founder workflow. Open source, built in Indonesia.',
     url: 'https://weekndlabs.com',
     siteName: 'WeekndLabs',
     locale: 'en_US',
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'WeekndLabs | Agents run here.',
-    description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9% on a real command mix.',
+    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products, open source, built in Indonesia.',
     creator: '@weekndlabs',
   },
   robots: {

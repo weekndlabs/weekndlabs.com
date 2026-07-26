@@ -4,22 +4,24 @@ import { SectionFadeIn } from '@/components/SectionFadeIn';
 
 export const revalidate = 3600;
 
-// Public repos we surface commits from. ForgePod is private, so it has no feed.
-const ACTIVITY_REPOS = [
+// Public product repos. ForgePod is private, so it has no stars or feed.
+const PRODUCT_REPOS = [
   'fajarhide/omni',
   'fajarhide/heimsense',
   'fajarhide/bubo',
   'fajarhide/ai-pr-describer',
-  'weekndlabs/weekndlabs.com',
 ];
+
+// The site repo ships often, so it earns a place in the activity feed.
+const ACTIVITY_REPOS = [...PRODUCT_REPOS, 'weekndlabs/weekndlabs.com'];
 
 type CommitResponse = { commit: { message: string; author: { date: string } } }[];
 
 type Activity = { message: string; repo: string; date: string };
 
-async function getOmniStars(): Promise<number | null> {
+async function getRepoStars(repo: string): Promise<number | null> {
   try {
-    const res = await fetch('https://api.github.com/repos/fajarhide/omni', {
+    const res = await fetch(`https://api.github.com/repos/${repo}`, {
       headers: { Accept: 'application/vnd.github+json' },
       next: { revalidate },
     });
@@ -29,6 +31,14 @@ async function getOmniStars(): Promise<number | null> {
   } catch {
     return null;
   }
+}
+
+// Sum across the public product repos. Returns null if any lookup fails, so we
+// never render a total that silently under-counts.
+async function getTotalStars(): Promise<number | null> {
+  const counts = await Promise.all(PRODUCT_REPOS.map(getRepoStars));
+  if (counts.some((c) => c === null)) return null;
+  return counts.reduce((sum: number, c) => sum + c!, 0);
 }
 
 async function getLatestCommit(repo: string): Promise<Activity | null> {
@@ -61,18 +71,18 @@ function ago(iso: string) {
 }
 
 export default async function Home() {
-  const [stars, activity] = await Promise.all([getOmniStars(), getActivity()]);
+  const [stars, activity] = await Promise.all([getTotalStars(), getActivity()]);
 
   return (
     <div className="flex flex-col gap-16 md:gap-32 pb-16 md:pb-24 top-0 relative">
       <SectionFadeIn className="pt-16 md:pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-mono text-text-primary mb-6 leading-tight tracking-tight">
-          Your terminal is what makes AI agents expensive.
+          Reliable infrastructure for the agentic era.
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          Omni strips the build logs, progress bars and ANSI noise before your agent ever reads them.
-          58.9% fewer tokens on a real command mix, {stars ?? '300+'} stars on GitHub, MIT licensed.
-          It is one of five tools we build here, in the open, from Indonesia.
+          Five tools running in production: agent context, LLM routing, pull request automation,
+          macOS performance, and founder workflow. Open source under MIT and Apache 2.0,
+          with {stars ?? '300+'} stars on GitHub.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
@@ -81,12 +91,6 @@ export default async function Home() {
           <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="sm:hidden border-accent-amber text-accent-amber hover:bg-accent-amber hover:text-background">
             Sponsor
           </Button>
-        </div>
-        <div className="mt-8 md:mt-10 w-full max-w-md">
-          <p className="font-mono text-xs text-text-muted mb-2 text-left">install omni</p>
-          <pre className="border border-border bg-surface rounded p-4 font-mono text-sm text-accent-cyan overflow-x-auto text-left">
-            <code>brew install fajarhide/tap/omni</code>
-          </pre>
         </div>
       </SectionFadeIn>
 
@@ -131,6 +135,12 @@ export default async function Home() {
             tags={['AI', 'Developer Tools', 'GitHub Actions']}
             linkHref="https://github.com/marketplace/actions/ai-pull-request-describer"
           />
+        </div>
+        <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
+          <p className="font-mono text-xs text-text-muted shrink-0">start with omni</p>
+          <pre className="border border-border bg-surface rounded px-4 py-3 font-mono text-sm text-accent-cyan overflow-x-auto flex-grow">
+            <code>brew install fajarhide/tap/omni</code>
+          </pre>
         </div>
       </SectionFadeIn>
 
