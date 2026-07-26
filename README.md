@@ -16,7 +16,7 @@ We believe that foundational developer tools should not be gated behind arbitrar
 - **Styling**: TailwindCSS. Colour tokens live in [`app/globals.css`](app/globals.css) as RGB triplets, so one set serves both themes and Tailwind's alpha modifiers still resolve.
 - **Typography**: [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) for headings, [Inter](https://fonts.google.com/specimen/Inter) for body, [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) for anything a machine emitted: commands, versions, tags, commit subjects.
 - **Themes**: light and dark. Follows the OS by default; the nav toggle overrides it and the choice persists. Amber on navy in the dark, the same amber deepened to hold as text on paper in the light.
-- **Live data**: star counts and recent commits come from the GitHub API on an hourly ISR revalidation. The hero still falls back to a hardcoded star count when a lookup fails ([#3](https://github.com/weekndlabs/weekndlabs.com/issues/3)).
+- **Live data**: star counts and recent commits come from the GitHub API on an hourly ISR revalidation. When a lookup fails the page drops the affected line rather than substituting a stale number.
 - **SEO & PWA**: Dynamic Open Graph Images (`next/og`), Native Manifest Generation
 
 ## Local Development
