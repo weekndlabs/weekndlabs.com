@@ -18,7 +18,7 @@ export const SectionFadeIn: React.FC<SectionFadeInProps> = ({ children, classNam
   return (
     <section
       id={id}
-      className={`transition-all duration-1000 ease-out transform ${
+      className={`transition-all duration-1000 ease-out transform motion-reduce:transition-none ${
         mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
       } ${className}`}
     >

@@ -68,13 +68,19 @@ html {
   scroll-behavior: smooth;
 }
 
-.fade-in {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+/* The navbar is sticky and 4rem tall, so an anchor target would otherwise land
+   underneath it. The extra rem covers the 1rem a section still travels while its
+   mount transition settles.
+
+   Not scoped to :target. A same-page hash link scrolls inside the same tick that
+   pushState sets the hash, before :target has been restyled, so the margin has to
+   already be on the element. */
+section[id] {
+  scroll-margin-top: 6rem;
 }
 
-.fade-in.visible {
-  opacity: 1;
-  transform: translateY(0);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
