@@ -34,7 +34,6 @@ const config: Config = {
         text: {
           primary: "rgb(var(--c-text-primary) / <alpha-value>)",
           secondary: "rgb(var(--c-text-secondary) / <alpha-value>)",
-          muted: "rgb(var(--c-text-muted) / <alpha-value>)",
         }
       },
       fontFamily: {

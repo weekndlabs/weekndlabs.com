@@ -12,7 +12,7 @@ export default function TermsOfService() {
         <h1 className="text-4xl md:text-5xl font-display text-text-primary mb-4 leading-tight">
           Terms of Service<span className="text-accent">.</span>
         </h1>
-        <h2 className="text-lg md:text-xl text-text-muted mb-8">
+        <h2 className="text-lg md:text-xl text-text-secondary mb-8">
           The rules of engagement.
         </h2>
 

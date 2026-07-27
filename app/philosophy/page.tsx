@@ -12,7 +12,7 @@ export default function Philosophy() {
         <h1 className="text-4xl md:text-5xl font-display text-text-primary mb-4 leading-tight">
           Philosophy<span className="text-accent">.</span>
         </h1>
-        <h2 className="text-lg md:text-xl text-text-muted mb-8">
+        <h2 className="text-lg md:text-xl text-text-secondary mb-8">
           Engineering for builders.
         </h2>
 
@@ -84,7 +84,7 @@ export default function Philosophy() {
         <div className="flex flex-col sm:flex-row gap-4">
           <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 px-6 py-3 font-mono text-sm border border-border bg-surface hover:border-accent/50 hover:text-accent transition-colors rounded-sm">
             <span>Sponsor on GitHub</span>
-            <span className="text-text-muted text-xs">{"->"}</span>
+            <span className="text-text-secondary text-xs">{"->"}</span>
           </a>
         </div>
       </SectionFadeIn>

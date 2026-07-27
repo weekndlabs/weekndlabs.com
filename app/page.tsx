@@ -142,7 +142,7 @@ export default async function Home() {
           />
         </div>
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
-          <p className="font-mono text-xs text-text-muted shrink-0">start with omni</p>
+          <p className="font-mono text-xs text-text-secondary shrink-0">start with omni</p>
           <pre className="border border-border bg-surface rounded px-4 py-3 font-mono text-sm text-accent overflow-x-auto flex-grow">
             <code>brew install fajarhide/tap/omni</code>
           </pre>
@@ -174,8 +174,8 @@ export default async function Home() {
                   <span className="text-text-primary">{item.message}</span>
                 </div>
                 <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
-                  <span className="px-2 py-0.5 bg-background border border-border rounded text-text-muted text-xs">{item.repo}</span>
-                  <span className="text-text-muted text-xs">{ago(item.date)}</span>
+                  <span className="px-2 py-0.5 bg-background border border-border rounded text-text-secondary text-xs">{item.repo}</span>
+                  <span className="text-text-secondary text-xs">{ago(item.date)}</span>
                 </div>
               </li>
             ))}
