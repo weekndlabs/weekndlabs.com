@@ -7,13 +7,13 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 flex justify-between flex-wrap gap-y-8 flex-col md:flex-row items-center md:items-start text-center md:text-left">
         
         <div>
-          <p className="font-mono text-sm text-text-muted">
+          <p className="font-mono text-sm text-text-secondary">
             &copy; 2026 WeekndLabs.
           </p>
         </div>
 
         <div className="flex-grow flex justify-center text-center">
-          <p className="font-mono text-sm text-text-muted">
+          <p className="font-mono text-sm text-text-secondary">
             Built from Indonesia 🇮🇩 shipped to the world.
           </p>
         </div>

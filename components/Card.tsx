@@ -33,7 +33,7 @@ export const Card: React.FC<CardProps> = ({
         </h3>
         {linkHref && (
           <svg
-            className="w-5 h-5 text-text-muted group-hover:text-accent transition-colors flex-shrink-0"
+            className="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors flex-shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -55,7 +55,7 @@ export const Card: React.FC<CardProps> = ({
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-auto">
           {tags.map((tag, idx) => (
-            <span key={idx} className="font-mono text-xs text-text-muted border border-border px-2 py-1 rounded-sm bg-background group-hover:border-accent/30 group-hover:text-accent transition-colors">
+            <span key={idx} className="font-mono text-xs text-text-secondary border border-border px-2 py-1 rounded-sm bg-background group-hover:border-accent/30 group-hover:text-accent transition-colors">
               [{tag}]
             </span>
           ))}

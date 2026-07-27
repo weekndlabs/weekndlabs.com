@@ -17,12 +17,16 @@
   --c-border: 216 209 192;
   --c-border-soft: 228 222 207;
   /* Amber deepens on paper. #F5B841 is 1.8:1 on this background and unreadable;
-     these two hold as text. Do not paste the dark values in here. */
+     these two hold as text. Do not paste the dark values in here.
+
+     `bright` is a dark-mode word and it misleads here: on paper the emphasis
+     step has to go *darker*, because lighter means less contrast. The previous
+     #B87400 copied the dark idea and measured 3.57:1 as text, under AA. This
+     value is 4.80:1 and matches `accent-strong` in @weekndlabs/design. */
   --c-accent: 156 97 0;
-  --c-accent-bright: 184 116 0;
+  --c-accent-bright: 122 78 0;
   --c-text-primary: 28 30 40;
   --c-text-secondary: 90 95 112;
-  --c-text-muted: 120 126 144;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,7 +41,6 @@
     --c-accent-bright: 252 214 112;
     --c-text-primary: 236 238 245;
     --c-text-secondary: 138 144 166;
-    --c-text-muted: 86 93 117;
   }
 }
 
@@ -52,7 +55,6 @@
   --c-accent-bright: 252 214 112;
   --c-text-primary: 236 238 245;
   --c-text-secondary: 138 144 166;
-  --c-text-muted: 86 93 117;
 }
 
 @layer base {
