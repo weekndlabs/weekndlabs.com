@@ -51,7 +51,7 @@ export const Navbar = () => {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-text-primary hover:text-accent transition-colors group"
+          className="flex items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:text-brand transition-colors group"
         >
           <Image src="/logo.png" alt="" width={32} height={32} className="rounded-lg group-hover:opacity-80 transition-opacity" />
           <span>WeekndLabs</span>
@@ -66,8 +66,8 @@ export const Navbar = () => {
               aria-current={isActive(href) ? 'page' : undefined}
               className={`font-mono text-sm border-b transition-colors ${
                 isActive(href)
-                  ? 'text-accent border-accent'
-                  : 'text-text-secondary border-transparent hover:text-text-primary hover:border-border'
+                  ? 'text-brand border-brand'
+                  : 'text-muted-foreground border-transparent hover:text-foreground hover:border-border'
               }`}
             >
               {label}
@@ -89,7 +89,7 @@ export const Navbar = () => {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border text-text-secondary transition-colors hover:border-accent hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
           </button>
@@ -102,7 +102,7 @@ export const Navbar = () => {
         // under the navbar.
         <div
           id="mobile-nav"
-          className="md:hidden absolute top-full inset-x-0 border-b border-border bg-surface px-6 py-2 flex flex-col"
+          className="md:hidden absolute top-full inset-x-0 border-b border-border bg-muted px-6 py-2 flex flex-col"
         >
           {LINKS.map(({ href, label }) => (
             <Link
@@ -110,12 +110,12 @@ export const Navbar = () => {
               href={href}
               onClick={() => select(href)}
               aria-current={isActive(href) ? 'page' : undefined}
-              className={`font-mono text-sm py-3.5 border-b border-border-soft last:border-b-0 transition-colors ${
-                isActive(href) ? 'text-accent' : 'text-text-primary active:text-accent'
+              className={`font-mono text-sm py-3.5 border-b border-border/60 last:border-b-0 transition-colors ${
+                isActive(href) ? 'text-brand' : 'text-foreground active:text-brand'
               }`}
             >
               {label}
-              {isActive(href) && <span className="block h-px w-8 bg-accent mt-2" aria-hidden="true" />}
+              {isActive(href) && <span className="block h-px w-8 bg-brand mt-2" aria-hidden="true" />}
             </Link>
           ))}
           <div className="flex flex-col gap-3 pt-4 pb-2 mt-2 border-t border-border">

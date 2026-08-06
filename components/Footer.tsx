@@ -7,31 +7,31 @@ export const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 flex justify-between flex-wrap gap-y-8 flex-col md:flex-row items-center md:items-start text-center md:text-left">
         
         <div>
-          <p className="font-mono text-sm text-text-secondary">
+          <p className="font-mono text-sm text-muted-foreground">
             &copy; 2026 WeekndLabs.
           </p>
         </div>
 
         <div className="flex-grow flex justify-center text-center">
-          <p className="font-mono text-sm text-text-secondary">
+          <p className="font-mono text-sm text-muted-foreground">
             Built from Indonesia 🇮🇩 shipped to the world.
           </p>
         </div>
 
         <div className="flex flex-wrap justify-center gap-6">
-          <a href="https://github.com/sponsors/fajarhide" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-accent-bright hover:opacity-80 transition-opacity">
+          <a href="https://github.com/sponsors/fajarhide" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-brand-strong hover:opacity-80 transition-opacity">
             Sponsor
           </a>
-          <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
             GitHub
           </a>
-          <Link href="/philosophy" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/philosophy" className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
             Philosophy
           </Link>
-          <Link href="/privacy-policy" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/privacy-policy" className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
             Privacy
           </Link>
-          <Link href="/terms-of-service" className="font-mono text-sm text-text-secondary hover:text-text-primary transition-colors">
+          <Link href="/terms-of-service" className="font-mono text-sm text-muted-foreground hover:text-foreground transition-colors">
             Terms
           </Link>
         </div>

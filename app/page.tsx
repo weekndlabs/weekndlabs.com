@@ -74,10 +74,10 @@ export default async function Home() {
   return (
     <div className="flex flex-col gap-16 md:gap-32 pb-16 md:pb-24 top-0 relative">
       <SectionFadeIn className="pt-16 md:pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-text-primary mb-6 leading-tight tracking-tight">
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-foreground mb-6 leading-tight tracking-tight">
           Reliable infrastructure for the agentic era.
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-text-secondary max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
+        <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
           Five tools running in production: agent context, LLM routing, pull request automation,
           macOS performance, and founder workflow. Open source under MIT and Apache 2.0
           {starClause(stars)}.
@@ -94,7 +94,7 @@ export default async function Home() {
 
       <SectionFadeIn id="products" className="px-6 max-w-4xl mx-auto w-full">
         <div className="mb-8 md:mb-12">
-          <h2 className="text-2xl md:text-3xl font-display text-text-primary mb-4">What we ship</h2>
+          <h2 className="text-2xl md:text-3xl font-display text-foreground mb-4">What we ship</h2>
           <div className="h-px w-24 bg-border"></div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
@@ -142,16 +142,16 @@ export default async function Home() {
           />
         </div>
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
-          <p className="font-mono text-xs text-text-secondary shrink-0">start with omni</p>
-          <pre className="border border-border bg-surface rounded px-4 py-3 font-mono text-sm text-accent overflow-x-auto flex-grow">
+          <p className="font-mono text-xs text-muted-foreground shrink-0">start with omni</p>
+          <pre className="border border-border bg-muted rounded px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
             <code>brew install fajarhide/tap/omni</code>
           </pre>
         </div>
       </SectionFadeIn>
 
       <SectionFadeIn id="philosophy" className="px-6 max-w-4xl mx-auto w-full text-center py-8">
-        <h2 className="text-2xl font-display text-text-primary mb-6">Engineering for builders.</h2>
-        <p className="text-text-secondary mb-8">
+        <h2 className="text-2xl font-display text-foreground mb-6">Engineering for builders.</h2>
+        <p className="text-muted-foreground mb-8">
           Every tool here ships under MIT or Apache 2.0. Read the code, fork it, run it in production, and never ask us for permission.
         </p>
         <div className="flex justify-center">
@@ -163,19 +163,19 @@ export default async function Home() {
 
       {activity.length > 0 && (
         <SectionFadeIn id="activity" className="px-6 max-w-4xl mx-auto w-full">
-          <h2 className="text-xl font-display text-text-primary mb-6">Recent activity</h2>
-          <ul className="border border-border rounded bg-surface divide-y divide-border list-none pl-0">
+          <h2 className="text-xl font-display text-foreground mb-6">Recent activity</h2>
+          <ul className="border border-border rounded bg-muted divide-y divide-border list-none pl-0">
             {activity.map((item) => (
               <li key={`${item.repo}-${item.date}`} className="p-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between font-mono text-sm hover:bg-background transition-colors">
                 <div className="flex items-start gap-4">
-                  <span className={`shrink-0 mt-0.5 sm:mt-0 ${item.message.startsWith('fix') ? 'text-accent-bright' : 'text-accent'}`}>
+                  <span className={`shrink-0 mt-0.5 sm:mt-0 ${item.message.startsWith('fix') ? 'text-brand-strong' : 'text-brand'}`}>
                     {item.message.startsWith('fix') ? '🐛' : '⚡'}
                   </span>
-                  <span className="text-text-primary">{item.message}</span>
+                  <span className="text-foreground">{item.message}</span>
                 </div>
                 <div className="flex items-center gap-4 shrink-0 mt-2 sm:mt-0 ml-8 sm:ml-0">
-                  <span className="px-2 py-0.5 bg-background border border-border rounded text-text-secondary text-xs">{item.repo}</span>
-                  <span className="text-text-secondary text-xs">{ago(item.date)}</span>
+                  <span className="px-2 py-0.5 bg-background border border-border rounded text-muted-foreground text-xs">{item.repo}</span>
+                  <span className="text-muted-foreground text-xs">{ago(item.date)}</span>
                 </div>
               </li>
             ))}

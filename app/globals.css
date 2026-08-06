@@ -1,65 +1,41 @@
+@import '@weekndlabs/design/tokens.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tokens are RGB triplets rather than hex so Tailwind's alpha modifiers
-   (border-accent/30, bg-accent-bright/10) still resolve. bubo-site gets the same
-   pairs out of light-dark(), which cannot be used here for exactly that reason.
+/* Every colour on this site comes from @weekndlabs/design. There are no token
+   values here any more, and there should never be again: a value declared here
+   is one the package's contrast gate cannot see.
 
-   Light is the default block and dark is applied two ways: by OS preference when
-   the visitor has not chosen, and by data-theme when they have. The two dark
-   blocks are duplicated on purpose, since CSS has no way to share one. */
-:root {
-  color-scheme: light;
-  --c-background: 250 248 243;
-  --c-surface: 240 236 226;
-  --c-card: 244 240 231;
-  --c-border: 216 209 192;
-  --c-border-soft: 228 222 207;
-  /* Amber deepens on paper. #F5B841 is 1.8:1 on this background and unreadable;
-     these two hold as text. Do not paste the dark values in here.
+   The package emits its light and dark blocks under [data-theme], plus a dark
+   default under :where(:root) for consumers that never set one. This site always
+   sets one. layout.tsx renders data-theme="light" server-side, and the inline
+   script in <head> replaces it before first paint with the stored choice, or
+   with the OS preference when there is no stored choice. So the attribute is
+   always present, the package blocks always match, and a visitor with no
+   JavaScript gets light rather than the package fallback.
 
-     `bright` is a dark-mode word and it misleads here: on paper the emphasis
-     step has to go *darker*, because lighter means less contrast. The previous
-     #B87400 copied the dark idea and measured 3.57:1 as text, under AA. This
-     value is 4.80:1 and matches `accent-strong` in @weekndlabs/design. */
-  --c-accent: 156 97 0;
-  --c-accent-bright: 122 78 0;
-  --c-text-primary: 28 30 40;
-  --c-text-secondary: 90 95 112;
-}
+   That is also why there is no prefers-color-scheme block here. The old file
+   carried the dark palette twice, once for the media query and once for the
+   attribute, because CSS cannot share a block between them. Deciding the theme
+   in one line of script deletes the duplicate instead of maintaining it. */
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-    --c-background: 18 20 31;
-    --c-surface: 26 29 43;
-    --c-card: 30 35 51;
-    --c-border: 42 48 72;
-    --c-border-soft: 33 39 58;
-    --c-accent: 245 184 65;
-    --c-accent-bright: 252 214 112;
-    --c-text-primary: 236 238 245;
-    --c-text-secondary: 138 144 166;
-  }
-}
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark'] { color-scheme: dark; }
 
-:root[data-theme='dark'] {
-  color-scheme: dark;
-  --c-background: 18 20 31;
-  --c-surface: 26 29 43;
-  --c-card: 30 35 51;
-  --c-border: 42 48 72;
-  --c-border-soft: 33 39 58;
-  --c-accent: 245 184 65;
-  --c-accent-bright: 252 214 112;
-  --c-text-primary: 236 238 245;
-  --c-text-secondary: 138 144 166;
+/* The signature of the system: corners are continuous, not circular. A browser
+   without corner-shape ignores this and keeps the plain radius, so it is safe
+   to set once, globally, rather than beside every border-radius. */
+*,
+::before,
+::after {
+  corner-shape: var(--wl-corner-shape);
 }
 
 @layer base {
   body {
-    @apply bg-background font-sans text-text-primary antialiased selection:bg-accent selection:text-background;
+    @apply bg-background font-sans text-foreground antialiased selection:bg-brand selection:text-background;
   }
   h1, h2, h3 {
     @apply font-display tracking-tight;

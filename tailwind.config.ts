@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import design from "@weekndlabs/design/tailwind";
 
 const config: Config = {
   // A touch device fires hover on tap and then leaves it stuck on whatever was
@@ -7,6 +8,10 @@ const config: Config = {
   future: {
     hoverOnlyWhenSupported: true,
   },
+  // Colour, spacing, radius and the type scale all arrive from the design
+  // package. Everything below is either a site-level alias onto a package token,
+  // or a decision that is this site's and not the system's.
+  presets: [design],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -14,46 +19,46 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // Shared with bubo-site's dark theme, token for token, so the two sites
-      // read as one house. Amber is the through-line across the family: it is
-      // Bubo's eyes and Omni's phosphor, which is why it replaced the old cyan.
-      // Values live in globals.css so one token set serves both themes. See the
-      // comment there for why they are triplets and not hex.
       colors: {
-        background: "rgb(var(--c-background) / <alpha-value>)",
-        surface: "rgb(var(--c-surface) / <alpha-value>)",
-        card: "rgb(var(--c-card) / <alpha-value>)",
-        accent: {
-          DEFAULT: "rgb(var(--c-accent) / <alpha-value>)",
-          bright: "rgb(var(--c-accent-bright) / <alpha-value>)",
+        // The system has one accent, the blue that also serves `ring` and
+        // `chart-1`. This site uses it as a brand mark on headings, links and
+        // code, which `ring` does not describe, so it gets a name here.
+        //
+        // Not called `accent`. In shadcn's vocabulary, which this package
+        // follows, `--accent` is the dim hover surface and naming a brand
+        // colour after it is the mistake the package's own docs warn about.
+        brand: {
+          DEFAULT: "var(--wl-ring)",
+          // One step up, for the badge and the emphasis word. Mixing toward the
+          // ink is the package's documented way to gain contrast in both
+          // themes; subtracting lightness only works on a light ground.
+          strong: "color-mix(in oklch, var(--wl-ring) 78%, var(--wl-foreground))",
         },
-        border: {
-          DEFAULT: "rgb(var(--c-border) / <alpha-value>)",
-          soft: "rgb(var(--c-border-soft) / <alpha-value>)",
-        },
-        text: {
-          primary: "rgb(var(--c-text-primary) / <alpha-value>)",
-          secondary: "rgb(var(--c-text-secondary) / <alpha-value>)",
-        }
+      },
+      borderRadius: {
+        // The package ships control/card/window. These are the Tailwind names
+        // the markup already uses, pointed at those steps, so `rounded-sm` is a
+        // control and `rounded-lg` is a card rather than an arbitrary pixel.
+        sm: "var(--wl-radius-control)",
+        DEFAULT: "var(--wl-radius-control)",
+        md: "var(--wl-radius-card)",
+        lg: "var(--wl-radius-card)",
+        xl: "var(--wl-radius-window)",
+        "2xl": "var(--wl-radius-window)",
+        "3xl": "var(--wl-radius-window)",
       },
       fontFamily: {
         // Omni's rule, adopted here: mono means a machine emitted it, sans means
-        // a person wrote it. Headings are people talking, so they are display.
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
-        sans: ['var(--font-body)', 'system-ui', 'sans-serif'],
+        // a person wrote it. Headings are people talking, and one family covers
+        // both because Inter's optical size axis reshapes the letterforms as the
+        // size grows. Bricolage Grotesque is gone with 0.4.0.
+        display: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
-      borderRadius: {
-        sm: '2px',
-        DEFAULT: '4px',
-        md: '4px',
-        lg: '4px',
-        xl: '4px',
-        '2xl': '4px',
-        '3xl': '4px',
-        full: '9999px',
-      },
       boxShadow: {
+        // Separation here is a hairline, never a shadow. The system reserves
+        // shadow for things that genuinely float, and this site has none.
         scrim: "none",
         sm: "none",
         DEFAULT: "none",
@@ -62,7 +67,7 @@ const config: Config = {
         xl: "none",
         "2xl": "none",
         inner: "none",
-      }
+      },
     },
   },
   plugins: [],

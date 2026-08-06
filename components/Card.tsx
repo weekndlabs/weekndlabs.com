@@ -21,19 +21,19 @@ export const Card: React.FC<CardProps> = ({
     <>
       {badgeLabel && (
         <div className="mb-4">
-          <span className="inline-block font-mono text-xs text-accent-bright uppercase px-2 py-0.5 border border-accent-bright/30 bg-accent-bright/10 rounded-sm">
+          <span className="inline-block font-mono text-xs text-brand-strong uppercase px-2 py-0.5 border border-brand-strong/30 bg-brand-strong/10 rounded-sm">
             {badgeLabel}
           </span>
         </div>
       )}
       
       <div className="flex items-start justify-between gap-4 mb-3">
-        <h3 className="text-xl font-display text-text-primary group-hover:text-accent transition-colors">
+        <h3 className="text-xl font-display text-foreground group-hover:text-brand transition-colors">
           {title}
         </h3>
         {linkHref && (
           <svg
-            className="w-5 h-5 text-text-secondary group-hover:text-accent transition-colors flex-shrink-0"
+            className="w-5 h-5 text-muted-foreground group-hover:text-brand transition-colors flex-shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -48,14 +48,14 @@ export const Card: React.FC<CardProps> = ({
         )}
       </div>
       
-      <p className="text-text-secondary mb-6 flex-grow leading-relaxed group-hover:text-text-primary/90 transition-colors">
+      <p className="text-muted-foreground mb-6 flex-grow leading-relaxed group-hover:text-foreground/90 transition-colors">
         {description}
       </p>
 
       {tags.length > 0 && (
         <div className="flex flex-wrap gap-2 mt-auto">
           {tags.map((tag, idx) => (
-            <span key={idx} className="font-mono text-xs text-text-secondary border border-border px-2 py-1 rounded-sm bg-background group-hover:border-accent/30 group-hover:text-accent transition-colors">
+            <span key={idx} className="font-mono text-xs text-muted-foreground border border-border px-2 py-1 rounded-sm bg-background group-hover:border-brand/30 group-hover:text-brand transition-colors">
               [{tag}]
             </span>
           ))}
@@ -64,7 +64,7 @@ export const Card: React.FC<CardProps> = ({
     </>
   );
 
-  const containerClasses = `group relative bg-surface border border-border rounded p-6 flex flex-col h-full transition-colors duration-300 hover:border-accent/50 block ${className}`;
+  const containerClasses = `group relative bg-muted border border-border rounded p-6 flex flex-col h-full transition-colors duration-300 hover:border-brand/50 block ${className}`;
 
   if (linkHref) {
     // Internal routes stay in this tab. Only the cards pointing at another site
