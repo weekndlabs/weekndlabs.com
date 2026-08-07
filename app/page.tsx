@@ -75,7 +75,7 @@ export default async function Home() {
     <div className="flex flex-col gap-16 md:gap-32 pb-16 md:pb-24 top-0 relative">
       <SectionFadeIn className="pt-16 md:pt-32 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-foreground mb-6 leading-tight tracking-tight">
-          Reliable infrastructure for the agentic era.
+          Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
           Five tools running in production: agent context, LLM routing, pull request automation,
