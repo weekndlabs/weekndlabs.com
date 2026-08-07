@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "brand": "node scripts/make-brand.mjs",
     "start": "next start",
     "lint": "next lint",
     "test": "node --test lib/*.test.js"

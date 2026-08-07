@@ -7,12 +7,17 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products, open source, built in Indonesia.',
     start_url: '/',
     display: 'standalone',
-    background_color: '#12141F',
-    theme_color: '#12141F',
+    background_color: '#141416',
+    theme_color: '#141416',
     icons: [
       {
+        src: '/logo.svg',
+        sizes: 'any',
+        type: 'image/svg+xml',
+      },
+      {
         src: '/logo.png',
-        sizes: '1024x1024',
+        sizes: '512x512',
         type: 'image/png',
       },
     ],

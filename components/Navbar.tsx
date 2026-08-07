@@ -53,7 +53,9 @@ export const Navbar = () => {
           onClick={() => setOpen(false)}
           className="flex items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:text-brand transition-colors group"
         >
-          <Image src="/logo.png" alt="" width={32} height={32} className="rounded-lg group-hover:opacity-80 transition-opacity" />
+          {/* No radius here. The mark carries its own silhouette, and a CSS corner
+              on top of a squircle clips the curve it already has. */}
+          <Image src="/logo.png" alt="" width={32} height={32} className="group-hover:opacity-80 transition-opacity" />
           <span>WeekndLabs</span>
         </Link>
 
