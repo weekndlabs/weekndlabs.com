@@ -35,22 +35,6 @@ const config: Config = {
           strong: "color-mix(in oklch, var(--wl-ring) 78%, var(--wl-foreground))",
         },
       },
-      // 0.4.0's preset ships the system's spacing scale under numeric keys, which
-      // replaces Tailwind's own. Steps 1 to 4 happen to agree and the rest do
-      // not, so most of a page looks right and one utility explodes: `h-9 w-9`
-      // on the theme toggle rendered as a 96px box across the navbar.
-      //
-      // These six put Tailwind's values back. 0.4.1 fixes it at the source by
-      // prefixing the scale to `wl-*`, so delete this block on that bump.
-      // weekndlabs/design#32.
-      spacing: {
-        0: '0px',
-        5: '1.25rem',
-        6: '1.5rem',
-        7: '1.75rem',
-        8: '2rem',
-        9: '2.25rem',
-      },
       borderRadius: {
         // The package ships control/card/window. These are the Tailwind names
         // the markup already uses, pointed at those steps, so `rounded-sm` is a
