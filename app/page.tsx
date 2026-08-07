@@ -78,8 +78,9 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          Five tools running in production: agent context, LLM routing, pull request automation,
-          macOS performance, and founder workflow. Open source under MIT and Apache 2.0
+          Six tools in production, none of which you have to keep paying us to use: agent context,
+          LLM routing, pull request automation, macOS performance, founder workflow, and the design
+          system under all of it. Open source under MIT and Apache 2.0
           {starClause(stars)}.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
