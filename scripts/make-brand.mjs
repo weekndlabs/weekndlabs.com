@@ -19,7 +19,7 @@
  * would carry its own corner treatment and argue with the silhouette; a stroke
  * with round joins repeats it.
  */
-import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
@@ -122,9 +122,42 @@ mkdirSync(join(ROOT, 'public'), { recursive: true });
 const svgPath = join(ROOT, 'public/logo.svg');
 writeFileSync(svgPath, svg);
 
-// One source, three rasters. app/icon.png is the favicon Next serves, and the
-// docs site at weekndlabs.com/design links to it by absolute URL, so this is
-// also what changes the mark over there.
+/**
+ * Packs PNGs into an .ico.
+ *
+ * An ICO may hold PNG payloads verbatim, which every browser has understood
+ * since IE11, so this needs no encoder and no dependency: a 6 byte header, a 16
+ * byte directory entry per image, then the files.
+ */
+function ico(pngs) {
+  const header = Buffer.alloc(6);
+  header.writeUInt16LE(0, 0); // reserved
+  header.writeUInt16LE(1, 2); // 1 = icon
+  header.writeUInt16LE(pngs.length, 4);
+
+  let offset = 6 + pngs.length * 16;
+  const entries = [];
+  for (const { size, data } of pngs) {
+    const e = Buffer.alloc(16);
+    e.writeUInt8(size >= 256 ? 0 : size, 0); // 0 means 256
+    e.writeUInt8(size >= 256 ? 0 : size, 1);
+    e.writeUInt8(0, 2); // palette size, 0 for truecolour
+    e.writeUInt8(0, 3); // reserved
+    e.writeUInt16LE(1, 4); // colour planes
+    e.writeUInt16LE(32, 6); // bits per pixel
+    e.writeUInt32LE(data.length, 8);
+    e.writeUInt32LE(offset, 12);
+    offset += data.length;
+    entries.push(e);
+  }
+  return Buffer.concat([header, ...entries, ...pngs.map((p) => p.data)]);
+}
+
+// One source, four rasters and an icon bundle.
+//
+// app/favicon.ico is the one that is easy to forget. In the App Router it wins
+// over app/icon.png for /favicon.ico, so leaving it behind keeps the old mark
+// in the browser tab and in every bookmark while everything else has moved.
 const targets = [
   ['public/logo.png', 512],
   ['app/icon.png', 512],
@@ -135,4 +168,15 @@ for (const [file, size] of targets) {
   await render(svgPath, join(ROOT, file), size);
   console.log(`${file.padEnd(22)} ${size}x${size}`);
 }
+
+const ICO_SIZES = [16, 32, 48];
+const layers = [];
+for (const size of ICO_SIZES) {
+  const tmp = join(ROOT, `.brand-ico-${size}.png`);
+  await render(svgPath, tmp, size);
+  layers.push({ size, data: readFileSync(tmp) });
+  rmSync(tmp, { force: true });
+}
+writeFileSync(join(ROOT, 'app/favicon.ico'), ico(layers));
+console.log(`app/favicon.ico        ${ICO_SIZES.join(', ')}`);
 console.log('public/logo.svg          source');
