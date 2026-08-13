@@ -101,7 +101,7 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <Card
             title="Omni"
-            description="Noise-canceling context and long-term memory for AI agents. Turns output your agent has already seen into retrievable handles: 97.2% off the second read of a file, 14.9% across 6,656 real commands. Leaves JSON and YAML untouched, and passes failing commands through verbatim so no error is ever compressed away."
+            description="Stop paying to re-read the same output. OMNI turns repeated bytes into retrievable handles: 97.2% off a file your agent reads twice, 14.9% across 6,656 real commands. Nothing deleted, nothing invented, and every number replays on your own corpus."
             badgeLabel="SHIPPED v0.7.3"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
