@@ -17,6 +17,7 @@ const PRODUCT_REPOS = [
 // Bubo and ForgePod ship too, but their repos are private, so they are not part
 // of the open-source claim and `hero-count.test.js` holds that line.
 const OPEN_SOURCE_TOOLS = ['omni', 'heimsense', 'ai-pr-describer', 'design-system'];
+const COUNT_WORD = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
 
 // The site repo ships often, so it earns a place in the activity feed.
 const ACTIVITY_REPOS = [...PRODUCT_REPOS, 'weekndlabs/weekndlabs.com'];
@@ -83,7 +84,7 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          Four open-source tools you can keep, free: agent context, LLM routing, pull request
+          {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep, free: agent context, LLM routing, pull request
           automation, and the design system under all of it. All MIT and Apache 2.0
           {starClause(stars)}. Omni cuts 97.2% off the second read of a file and 14.9% across
           6,656 real commands, and every number replays on your own corpus.
