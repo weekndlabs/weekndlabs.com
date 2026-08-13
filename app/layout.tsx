@@ -32,7 +32,7 @@ const jetbrainsMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekndlabs.com'),
   title: 'WeekndLabs | Agents run here.',
-  description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 58.9%, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+  description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 14.9% on a real command mix, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
   keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Omni', 'Claude Code', 'token optimization', 'MCP'],
   authors: [{ name: 'WeekndLabs' }],
   creator: 'WeekndLabs',

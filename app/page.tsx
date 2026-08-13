@@ -13,6 +13,12 @@ const PRODUCT_REPOS = [
   'fajarhide/ai-pr-describer',
 ];
 
+// What the hero counts: public repo, permissive licence, nothing to pay later.
+// Bubo and ForgePod ship too, but their repos are private, so they are not part
+// of the open-source claim and `hero-count.test.js` holds that line.
+const OPEN_SOURCE_TOOLS = ['omni', 'heimsense', 'ai-pr-describer', 'design-system'];
+const COUNT_WORD = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
+
 // The site repo ships often, so it earns a place in the activity feed.
 const ACTIVITY_REPOS = [...PRODUCT_REPOS, 'weekndlabs/weekndlabs.com'];
 
@@ -78,10 +84,10 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
-          Six tools in production, none of which you have to keep paying us to use: agent context,
-          LLM routing, pull request automation, macOS performance, founder workflow, and the design
-          system under all of it. Open source under MIT and Apache 2.0
-          {starClause(stars)}.
+          {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep, free: agent context, LLM routing, pull request
+          automation, and the design system under all of it. All MIT and Apache 2.0
+          {starClause(stars)}. Every number we publish is measured on a real corpus and replays
+          on yours.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
@@ -101,8 +107,8 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <Card
             title="Omni"
-            description="Noise-canceling context and long-term memory for AI agents. Cuts a real command mix by 58.9%, leaves JSON and YAML untouched, and passes failing commands through verbatim so no error ever gets compressed away."
-            badgeLabel="SHIPPED v0.6.6"
+            description="Stop paying to re-read the same output. OMNI turns repeated bytes into retrievable handles: 97.2% off a file your agent reads twice, 14.9% across 6,656 real commands. Nothing deleted, nothing invented, and every number replays on your own corpus."
+            badgeLabel="SHIPPED v0.7.3"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
@@ -116,7 +122,7 @@ export default async function Home() {
           <Card
             title="Bubo"
             description="Tiny macOS menu-bar monitor that names the app making your Mac heavy and quits it in one click. Apple Silicon & Intel, no daemon."
-            badgeLabel="SHIPPED v1.2"
+            badgeLabel="SHIPPED v1.4"
             tags={['Swift', 'SwiftUI', 'macOS', 'Menu Bar', 'IOReport', 'SMC']}
             linkHref="https://bubo.weekndlabs.com"
           />
