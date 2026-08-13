@@ -86,8 +86,8 @@ export default async function Home() {
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
           {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep, free: agent context, LLM routing, pull request
           automation, and the design system under all of it. All MIT and Apache 2.0
-          {starClause(stars)}. Omni cuts 97.2% off the second read of a file and 14.9% across
-          6,656 real commands, and every number replays on your own corpus.
+          {starClause(stars)}. Every number we publish is measured on a real corpus and replays
+          on yours.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
           <Button href="#products" variant="filled">
