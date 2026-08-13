@@ -101,8 +101,8 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
           <Card
             title="Omni"
-            description="Noise-canceling context and long-term memory for AI agents. Cuts a real command mix by 58.9%, leaves JSON and YAML untouched, and passes failing commands through verbatim so no error ever gets compressed away."
-            badgeLabel="SHIPPED v0.6.6"
+            description="Noise-canceling context and long-term memory for AI agents. Turns output your agent has already seen into retrievable handles: 97.2% off the second read of a file, 14.9% across 6,656 real commands. Leaves JSON and YAML untouched, and passes failing commands through verbatim so no error is ever compressed away."
+            badgeLabel="SHIPPED v0.7.3"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
@@ -116,7 +116,7 @@ export default async function Home() {
           <Card
             title="Bubo"
             description="Tiny macOS menu-bar monitor that names the app making your Mac heavy and quits it in one click. Apple Silicon & Intel, no daemon."
-            badgeLabel="SHIPPED v1.2"
+            badgeLabel="SHIPPED v1.4"
             tags={['Swift', 'SwiftUI', 'macOS', 'Menu Bar', 'IOReport', 'SMC']}
             linkHref="https://bubo.weekndlabs.com"
           />
