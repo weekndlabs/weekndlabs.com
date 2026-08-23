@@ -7,7 +7,8 @@ interface CardProps {
   version?: string;
   tags?: string[];
   linkHref?: string;
-  /** One of the products in focus: bigger type, more room to say why. */
+  /** One of the products in focus. Only the title grows: the pair sits side by
+   *  side, so extra padding buys height rather than emphasis. */
   featured?: boolean;
   className?: string;
 }
@@ -29,7 +30,7 @@ export const Card: React.FC<CardProps> = ({
       <div className="flex items-baseline justify-between gap-4">
         <h3
           className={`font-display text-foreground group-hover:text-brand transition-colors ${
-            featured ? 'text-2xl md:text-3xl' : 'text-xl'
+            featured ? 'text-2xl' : 'text-xl'
           }`}
         >
           {title}
@@ -39,11 +40,7 @@ export const Card: React.FC<CardProps> = ({
         )}
       </div>
 
-      <p
-        className={`mt-3 text-muted-foreground leading-relaxed group-hover:text-foreground/90 transition-colors ${
-          featured ? 'max-w-2xl md:text-lg' : ''
-        }`}
-      >
+      <p className="mt-3 text-muted-foreground leading-relaxed group-hover:text-foreground/90 transition-colors">
         {description}
       </p>
 
@@ -82,7 +79,6 @@ export const Card: React.FC<CardProps> = ({
     'group relative flex h-full flex-col rounded-lg border border-border bg-muted p-6',
     'transition-colors duration-300 hover:border-brand/50',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-    featured ? 'md:p-8' : '',
     className,
   ].join(' ');
 

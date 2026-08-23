@@ -186,7 +186,7 @@ export default async function Home() {
           <Card
             featured
             title="Selat"
-            description="One gateway between your agents and every upstream. Connect GitHub, Google or Discord once from a browser: Selat seals the OAuth, refreshes the tokens, and never rotates the bearer your agent already holds. MCP and REST see the same catalog, so Claude Desktop and a runtime you wrote yourself call the same tools."
+            description="Every agent you write ends up holding somebody else's OAuth. Selat holds it instead: connect GitHub, Google or Discord once from a browser, and your agent keeps one bearer that never rotates under it. MCP and REST see the same catalog, so Claude Desktop and a runtime you wrote yourself call the same tools."
             version="v0.1.2"
             tags={['TypeScript', 'MCP', 'OAuth', 'Gateway']}
             linkHref="https://selat.weekndlabs.com"
@@ -194,7 +194,7 @@ export default async function Home() {
           <Card
             featured
             title="Omni"
-            description="Stop paying to re-read the same output. Omni turns repeated bytes into retrievable handles: 97.2% off a file your agent reads twice, 14.9% across 6,656 real commands. Nothing deleted, nothing invented, and a failing command is never touched."
+            description="Your agent pays twice for output it has already seen. OMNI hands back a retrievable handle instead: 97.2% off a file it reads twice, 89.6% off file reads across the corpus. Nothing deleted, nothing invented, and every number replays on your own history."
             version="v0.7.3"
             tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
