@@ -1,16 +1,13 @@
 import React from 'react';
-import { Badge } from './Badge';
 
 interface CardProps {
   title: string;
   description: string;
   /** Shipped version, or the release stage when there is no number yet. */
   version?: string;
-  /** Live label for the one product currently being built. */
-  status?: string;
   tags?: string[];
   linkHref?: string;
-  /** Spans the whole grid row, for the product the page is leading with. */
+  /** One of the products in focus: bigger type, more room to say why. */
   featured?: boolean;
   className?: string;
 }
@@ -19,7 +16,6 @@ export const Card: React.FC<CardProps> = ({
   title,
   description,
   version,
-  status,
   tags = [],
   linkHref,
   featured = false,
@@ -27,8 +23,6 @@ export const Card: React.FC<CardProps> = ({
 }) => {
   const CardContent = (
     <>
-      {status && <Badge label={status} className="mb-5 self-start" />}
-
       {/* Version sits on the title's baseline rather than in a badge above it.
           Every card here is shipped, so a row of loud SHIPPED pills carried no
           information; the number is the part that differs. */}
@@ -88,7 +82,7 @@ export const Card: React.FC<CardProps> = ({
     'group relative flex h-full flex-col rounded-lg border border-border bg-muted p-6',
     'transition-colors duration-300 hover:border-brand/50',
     'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background',
-    featured ? 'sm:col-span-2 lg:col-span-3 md:p-8' : '',
+    featured ? 'md:p-8' : '',
     className,
   ].join(' ');
 

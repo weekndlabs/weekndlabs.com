@@ -1,3 +1,4 @@
+import { Badge } from '@/components/Badge';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
@@ -20,6 +21,46 @@ const PRODUCT_REPOS = [
 // of the open-source claim and `hero-count.test.js` holds that line.
 const OPEN_SOURCE_TOOLS = ['selat', 'omni', 'heimsense', 'ai-pr-describer', 'design-system'];
 const COUNT_WORD = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
+
+// One command per product in focus, in the order the cards appear.
+const INSTALL = [
+  { label: 'start with selat', command: 'npx @fajarhide/selat' },
+  { label: 'or with omni', command: 'brew install fajarhide/tap/omni' },
+];
+
+// Shipped and maintained, just not where this month goes.
+const SHIPPED = [
+  {
+    title: 'Heimsense',
+    description: 'Point Claude Code at any LLM. A Go proxy that routes your agent traffic to whichever model you actually want to pay for.',
+    version: 'v0.1.3',
+    href: 'https://github.com/fajarhide/heimsense',
+  },
+  {
+    title: 'Bubo',
+    description: 'Names the app making your Mac heavy and quits it in one click. Menu bar only, no daemon.',
+    version: 'v1.4',
+    href: 'https://bubo.weekndlabs.com',
+  },
+  {
+    title: 'ForgePod',
+    description: 'Write down the assumption, ship the smallest thing that tests it, then watch what users do instead of what they said they would.',
+    version: 'Beta',
+    href: 'https://forgepod.dev',
+  },
+  {
+    title: 'AI PR Describer',
+    description: 'Reads the diff and writes the pull request description. Any OpenAI-compatible model, one step from the Actions marketplace.',
+    version: 'v1.1.4',
+    href: 'https://github.com/marketplace/actions/ai-pull-request-describer',
+  },
+  {
+    title: 'Design System',
+    description: 'Colour, type and spacing tokens behind every product here. A test fails the build when a contrast ratio drops below WCAG.',
+    version: 'v0.5.0',
+    href: '/design',
+  },
+];
 
 // The site repo ships often, so it earns a place in the activity feed.
 const ACTIVITY_REPOS = [...PRODUCT_REPOS, 'weekndlabs/weekndlabs.com'];
@@ -129,13 +170,16 @@ export default async function Home() {
 
       <SectionFadeIn id="products" className="px-6 max-w-5xl mx-auto w-full">
         <SectionHeading title="What we ship" action={{ label: 'github.com/weekndlabs', href: 'https://github.com/weekndlabs' }} />
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-          {/* Selat leads the grid because it is what is being built right now.
-              Spanning the row also makes the remaining six divide evenly at
-              every breakpoint. */}
+
+        {/* Two products get the week, and the page says which two rather than
+            spreading seven equal cards and letting the reader guess. */}
+        <div className="mb-4 flex items-center gap-4">
+          <Badge label="In focus" />
+          <div className="h-px flex-grow bg-border" aria-hidden="true" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           <Card
             featured
-            status="Now building"
             title="Selat"
             description="One gateway between your agents and every upstream. Connect GitHub, Google or Discord once from a browser: Selat seals the OAuth, refreshes the tokens, and never rotates the bearer your agent already holds. MCP and REST see the same catalog, so Claude Desktop and a runtime you wrote yourself call the same tools."
             version="v0.1.2"
@@ -143,54 +187,51 @@ export default async function Home() {
             linkHref="https://selat.weekndlabs.com"
           />
           <Card
+            featured
             title="Omni"
-            description="Stop paying to re-read the same output. OMNI turns repeated bytes into retrievable handles: 97.2% off a file your agent reads twice, 14.9% across 6,656 real commands. Nothing deleted, nothing invented."
+            description="Stop paying to re-read the same output. Omni turns repeated bytes into retrievable handles: 97.2% off a file your agent reads twice, 14.9% across 6,656 real commands. Nothing deleted, nothing invented, and a failing command is never touched."
             version="v0.7.3"
-            tags={['Rust', 'Agentic AI', 'MCP']}
+            tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
             linkHref="https://omni.weekndlabs.com"
           />
-          <Card
-            title="Heimsense"
-            description="Point Claude Code at any LLM. A Go proxy that routes your agent traffic to whichever model you actually want to pay for."
-            version="v0.1.3"
-            tags={['Go', 'Proxy', 'Router']}
-            linkHref="https://github.com/fajarhide/heimsense"
-          />
-          <Card
-            title="Bubo"
-            description="Names the app making your Mac heavy and quits it in one click. Menu bar only, no daemon, Apple Silicon and Intel."
-            version="v1.4"
-            tags={['Swift', 'SwiftUI', 'macOS']}
-            linkHref="https://bubo.weekndlabs.com"
-          />
-          <Card
-            title="ForgePod"
-            description="An AI-guided workflow for founders. Write down the assumption, ship the smallest thing that tests it, then watch what users do instead of what they said they would."
-            version="Beta"
-            tags={['AI', 'Product-Market Fit', 'MVP']}
-            linkHref="https://forgepod.dev"
-          />
-          <Card
-            title="AI PR Describer"
-            description="Reads the diff and writes the pull request description. Works with any OpenAI-compatible model, and installs from the Actions marketplace in one step."
-            version="v1.1.4"
-            tags={['AI', 'Developer Tools', 'GitHub Actions']}
-            linkHref="https://github.com/marketplace/actions/ai-pull-request-describer"
-          />
-          <Card
-            title="Design System"
-            description="One set of colour, type and spacing tokens behind every product on this page. A test computes every contrast ratio and fails the build when one drops below WCAG."
-            version="v0.5.0"
-            tags={['Design Tokens', 'WCAG', 'Tailwind']}
-            linkHref="/design"
-          />
         </div>
-        <div className="mt-6 md:mt-8 flex flex-col sm:flex-row sm:items-center gap-3">
-          <p className="font-mono text-xs text-muted-foreground shrink-0">start with selat</p>
-          <pre className="border border-border bg-muted rounded-lg px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
-            <code>npx @fajarhide/selat</code>
-          </pre>
+        <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          {INSTALL.map(({ label, command }) => (
+            <div key={label} className="flex items-center gap-3">
+              <p className="font-mono text-xs text-muted-foreground shrink-0">{label}</p>
+              <pre className="border border-border bg-muted rounded-lg px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
+                <code>{command}</code>
+              </pre>
+            </div>
+          ))}
         </div>
+
+        {/* The rest are shipped and maintained, not paused. They read as rows
+            because a row cannot leave a hole in a grid, and because five equal
+            cards under two large ones only muddies which is which. */}
+        <div className="mt-12 md:mt-16 mb-4 flex items-center gap-4">
+          <h3 className="font-mono text-xs uppercase text-muted-foreground">Also shipped</h3>
+          <div className="h-px flex-grow bg-border" aria-hidden="true" />
+        </div>
+        <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
+          {SHIPPED.map((tool) => (
+            <li key={tool.title}>
+              <a
+                href={tool.href}
+                {...(tool.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+              >
+                <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
+                  {tool.title}
+                </span>
+                <span className="text-sm text-muted-foreground flex-grow">{tool.description}</span>
+                <span className="font-mono text-xs text-muted-foreground shrink-0 sm:w-16 sm:text-right">
+                  {tool.version}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </SectionFadeIn>
 
       <SectionFadeIn id="philosophy" className="px-6 max-w-5xl mx-auto w-full">
