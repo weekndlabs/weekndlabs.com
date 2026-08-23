@@ -150,7 +150,7 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed text-pretty">
-          Open-source tools you can keep: the gateway, context and routing your agents run on,
+          Open-source tools you can keep, like the gateway, context and routing your agents run on,
           and the design system under all of it. All MIT and Apache 2.0
           {starClause(stars)}. None of it is a trial, and every number we publish is
           measured on a real corpus and replays
