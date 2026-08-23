@@ -32,7 +32,7 @@ const jetbrainsMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekndlabs.com'),
   title: 'WeekndLabs | Agents run here.',
-  description: 'Open-source developer tools from Indonesia. Selat gives agents one gateway to every upstream, Omni cuts AI agent token spend by 14.9% on a real command mix, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+  description: 'Open-source developer tools from Indonesia. Selat gives agents one gateway to every upstream, Omni takes 89.6% off the file reads an agent repeats, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
   keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Selat', 'Omni', 'Claude Code', 'token optimization', 'MCP', 'OAuth gateway'],
   authors: [{ name: 'WeekndLabs' }],
   creator: 'WeekndLabs',
