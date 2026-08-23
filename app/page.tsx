@@ -21,12 +21,6 @@ const PRODUCT_REPOS = [
   'fajarhide/ai-pr-describer',
 ];
 
-// What the hero counts: public repo, permissive licence, nothing to pay later.
-// Bubo and ForgePod ship too, but their repos are private, so they are not part
-// of the open-source claim and `hero-count.test.js` holds that line.
-const OPEN_SOURCE_TOOLS = ['selat', 'omni', 'heimsense', 'ai-pr-describer', 'design-system'];
-const COUNT_WORD = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
-
 // One command per product in focus, in the order the cards appear.
 const INSTALL = [
   { label: 'start with selat', command: 'npx @fajarhide/selat' },
@@ -156,9 +150,8 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed text-pretty">
-          {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep: a gateway between
-          your agents and every upstream, agent context, LLM routing, pull request automation, and
-          the design system under all of it. All MIT and Apache 2.0
+          Open-source tools you can keep: the gateway, context and routing your agents run on,
+          and the design system under all of it. All MIT and Apache 2.0
           {starClause(stars)}. None of it is a trial, and every number we publish is
           measured on a real corpus and replays
           on yours.
