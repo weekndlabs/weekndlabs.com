@@ -7,12 +7,17 @@ import { parseCommit } from '@/lib/commits';
 
 export const revalidate = 3600;
 
-// Public product repos. ForgePod is private, so it has no stars or feed.
+// Public product repos, and only public ones. Bubo and ForgePod are private, so
+// api.github.com answers 404 for them unauthenticated.
+//
+// That is not a cosmetic gap. `totalStars` refuses to publish a partial total,
+// which is the right rule, so one unreachable repo in this list deletes the star
+// count from the hero entirely. Bubo sat here and the sentence has been ending
+// at the licence in production ever since.
 const PRODUCT_REPOS = [
   'fajarhide/selat',
   'fajarhide/omni',
   'fajarhide/heimsense',
-  'fajarhide/bubo',
   'fajarhide/ai-pr-describer',
 ];
 
