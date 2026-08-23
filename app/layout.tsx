@@ -32,13 +32,13 @@ const jetbrainsMono = localFont({
 export const metadata: Metadata = {
   metadataBase: new URL('https://weekndlabs.com'),
   title: 'WeekndLabs | Agents run here.',
-  description: 'Open-source developer tools from Indonesia. Omni cuts AI agent token spend by 14.9% on a real command mix, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
-  keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Omni', 'Claude Code', 'token optimization', 'MCP'],
+  description: 'Open-source developer tools from Indonesia. Selat gives agents one gateway to every upstream, Omni takes 89.6% off the file reads an agent repeats, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+  keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Selat', 'Omni', 'Claude Code', 'token optimization', 'MCP', 'OAuth gateway'],
   authors: [{ name: 'WeekndLabs' }],
   creator: 'WeekndLabs',
   openGraph: {
     title: 'WeekndLabs | Agents run here.',
-    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products covering agent context, LLM routing, pull request automation, macOS performance, and founder workflow. Open source, built in Indonesia.',
+    description: 'WeekndLabs builds developer tools for the agentic era: an OAuth tool gateway for agents, agent context, LLM routing, pull request automation, macOS performance, and founder workflow. Open source, built in Indonesia.',
     url: 'https://weekndlabs.com',
     siteName: 'WeekndLabs',
     locale: 'en_US',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'WeekndLabs | Agents run here.',
-    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products, open source, built in Indonesia.',
+    description: 'WeekndLabs builds developer tools for the agentic era. Open source, built in Indonesia.',
     creator: '@weekndlabs',
   },
   robots: {
