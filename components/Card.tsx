@@ -1,43 +1,77 @@
 import React from 'react';
+import { Badge } from './Badge';
 
 interface CardProps {
   title: string;
   description: string;
-  badgeLabel?: string;
+  /** Shipped version, or the release stage when there is no number yet. */
+  version?: string;
+  /** Live label for the one product currently being built. */
+  status?: string;
   tags?: string[];
   linkHref?: string;
+  /** Spans the whole grid row, for the product the page is leading with. */
+  featured?: boolean;
   className?: string;
 }
 
 export const Card: React.FC<CardProps> = ({
   title,
   description,
-  badgeLabel,
+  version,
+  status,
   tags = [],
   linkHref,
+  featured = false,
   className = ''
 }) => {
   const CardContent = (
     <>
-      {badgeLabel && (
-        <div className="mb-4">
-          <span className="inline-block font-mono text-xs text-brand-strong uppercase px-2 py-0.5 border border-brand-strong/30 bg-brand-strong/10 rounded-sm">
-            {badgeLabel}
-          </span>
-        </div>
-      )}
-      
-      <div className="flex items-start justify-between gap-4 mb-3">
-        <h3 className="text-xl font-display text-foreground group-hover:text-brand transition-colors">
+      {status && <Badge label={status} className="mb-5 self-start" />}
+
+      {/* Version sits on the title's baseline rather than in a badge above it.
+          Every card here is shipped, so a row of loud SHIPPED pills carried no
+          information; the number is the part that differs. */}
+      <div className="flex items-baseline justify-between gap-4">
+        <h3
+          className={`font-display text-foreground group-hover:text-brand transition-colors ${
+            featured ? 'text-2xl md:text-3xl' : 'text-xl'
+          }`}
+        >
           {title}
         </h3>
+        {version && (
+          <span className="font-mono text-xs text-muted-foreground shrink-0">{version}</span>
+        )}
+      </div>
+
+      <p
+        className={`mt-3 text-muted-foreground leading-relaxed group-hover:text-foreground/90 transition-colors ${
+          featured ? 'max-w-2xl md:text-lg' : ''
+        }`}
+      >
+        {description}
+      </p>
+
+      <div className="mt-auto pt-6 flex items-end justify-between gap-4">
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="font-mono text-xs text-muted-foreground border border-border px-2 py-1 rounded-sm bg-background group-hover:border-brand/30 group-hover:text-brand transition-colors"
+            >
+              [{tag}]
+            </span>
+          ))}
+        </div>
         {linkHref && (
           <svg
-            className="w-5 h-5 text-muted-foreground group-hover:text-brand transition-colors flex-shrink-0"
+            className="w-5 h-5 shrink-0 text-muted-foreground group-hover:text-brand transition-colors"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
             strokeWidth="2"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -47,24 +81,16 @@ export const Card: React.FC<CardProps> = ({
           </svg>
         )}
       </div>
-      
-      <p className="text-muted-foreground mb-6 flex-grow leading-relaxed group-hover:text-foreground/90 transition-colors">
-        {description}
-      </p>
-
-      {tags.length > 0 && (
-        <div className="flex flex-wrap gap-2 mt-auto">
-          {tags.map((tag, idx) => (
-            <span key={idx} className="font-mono text-xs text-muted-foreground border border-border px-2 py-1 rounded-sm bg-background group-hover:border-brand/30 group-hover:text-brand transition-colors">
-              [{tag}]
-            </span>
-          ))}
-        </div>
-      )}
     </>
   );
 
-  const containerClasses = `group relative bg-muted border border-border rounded p-6 flex flex-col h-full transition-colors duration-300 hover:border-brand/50 block ${className}`;
+  const containerClasses = [
+    'group relative flex h-full flex-col rounded-lg border border-border bg-muted p-6',
+    'transition-colors duration-300 hover:border-brand/50',
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background',
+    featured ? 'sm:col-span-2 lg:col-span-3 md:p-8' : '',
+    className,
+  ].join(' ');
 
   if (linkHref) {
     // Internal routes stay in this tab. Only the cards pointing at another site
@@ -82,9 +108,5 @@ export const Card: React.FC<CardProps> = ({
     );
   }
 
-  return (
-    <div className={containerClasses}>
-      {CardContent}
-    </div>
-  );
+  return <div className={containerClasses}>{CardContent}</div>;
 };
