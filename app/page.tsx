@@ -110,10 +110,11 @@ export default async function Home() {
           Reliable infrastructure for the agentic era<span className="text-brand">.</span>
         </h1>
         <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed text-pretty">
-          {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep, free: a tool gateway
-          for agents, agent context, LLM routing, pull request automation, and the design system
-          under all of it. All MIT and Apache 2.0
-          {starClause(stars)}. Every number we publish is measured on a real corpus and replays
+          {COUNT_WORD[OPEN_SOURCE_TOOLS.length]} open-source tools you can keep: a gateway between
+          your agents and every upstream, agent context, LLM routing, pull request automation, and
+          the design system under all of it. All MIT and Apache 2.0
+          {starClause(stars)}. None of it is a trial, and every number we publish is
+          measured on a real corpus and replays
           on yours.
         </p>
         <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
