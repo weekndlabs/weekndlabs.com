@@ -30,6 +30,20 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Configuration
+
+One optional environment variable.
+
+| variable | effect |
+| --- | --- |
+| `GITHUB_TOKEN` | Raises the GitHub API budget from 60 requests an hour per IP to 5000. |
+
+The homepage makes nine calls per hourly revalidation. Without a token those nine
+come out of an anonymous budget shared with everything else leaving the same IP,
+and on a shared serverless pool that can run out. When it does, the star count and
+the activity feed drop out of the page and a `[github]` line lands in the deploy
+log. A read-only token with no scopes is enough.
+
 ## Licensing
 
 The tools and website are open-source and released under the [MIT License](LICENSE).

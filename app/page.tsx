@@ -4,6 +4,7 @@ import { HeroVisual } from '@/components/HeroVisual';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
 import { totalStars, starClause } from '@/lib/stars';
 import { parseCommit } from '@/lib/commits';
+import { githubHeaders, warnGithub } from '@/lib/github';
 import { CATEGORY_NOTES, byCategory, starRepos } from '@/lib/products';
 import type { ProductGroup } from '@/lib/products';
 
@@ -29,13 +30,17 @@ type Activity = { message: string; repo: string; date: string };
 async function getRepoStars(repo: string): Promise<number | null> {
   try {
     const res = await fetch(`https://api.github.com/repos/${repo}`, {
-      headers: { Accept: 'application/vnd.github+json' },
+      headers: githubHeaders(process.env.GITHUB_TOKEN),
       next: { revalidate },
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      warnGithub('stars', repo, `${res.status} ${res.statusText}`);
+      return null;
+    }
     const { stargazers_count } = (await res.json()) as { stargazers_count?: number };
     return typeof stargazers_count === 'number' ? stargazers_count : null;
-  } catch {
+  } catch (reason) {
+    warnGithub('stars', repo, reason);
     return null;
   }
 }
@@ -48,10 +53,13 @@ async function getTotalStars(): Promise<number | null> {
 async function getLatestCommit(repo: string): Promise<Activity | null> {
   try {
     const res = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=5`, {
-      headers: { Accept: 'application/vnd.github+json' },
+      headers: githubHeaders(process.env.GITHUB_TOKEN),
       next: { revalidate },
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      warnGithub('commits', repo, `${res.status} ${res.statusText}`);
+      return null;
+    }
     const commits = (await res.json()) as CommitResponse;
     if (!Array.isArray(commits)) return null;
     // A merge commit is the tip of every repo that takes pull requests, and it
@@ -60,7 +68,8 @@ async function getLatestCommit(repo: string): Promise<Activity | null> {
     if (!shipped) return null;
     const { message, author } = shipped.commit;
     return { message: message.split('\n')[0], repo, date: author.date };
-  } catch {
+  } catch (reason) {
+    warnGithub('commits', repo, reason);
     return null;
   }
 }
