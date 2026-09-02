@@ -31,6 +31,7 @@ export interface ProductGroup {
 }
 
 export const CATEGORIES: readonly Category[];
+export const CATEGORY_NOTES: Record<Category, string>;
 export const PRODUCTS: readonly Product[];
 export function focusProducts(): Product[];
 export function restProducts(): Product[];

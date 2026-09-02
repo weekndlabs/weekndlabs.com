@@ -1,12 +1,11 @@
-import { Badge } from '@/components/Badge';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
 import { HeroVisual } from '@/components/HeroVisual';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
 import { totalStars, starClause } from '@/lib/stars';
 import { parseCommit } from '@/lib/commits';
-import { byCategory, focusProducts, restProducts, starRepos } from '@/lib/products';
-import type { Product, ProductGroup } from '@/lib/products';
+import { CATEGORY_NOTES, byCategory, starRepos } from '@/lib/products';
+import type { ProductGroup } from '@/lib/products';
 
 export const revalidate = 3600;
 
@@ -112,15 +111,15 @@ export default async function Home() {
             Reliable infrastructure for the agentic era<span className="text-brand">.</span>
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mb-8 md:mb-10 leading-relaxed text-pretty">
-            Open-source tools you can keep, like the gateway, context and routing your agents run on,
-            and the design system under all of it. All MIT and Apache 2.0
-            {starClause(stars)}. None of it is a trial, and every number we publish is
+            A gateway for the credentials your agents hold, a context layer for what they read
+            twice, and routing for the models they call. All of it open source under MIT and
+            Apache 2.0{starClause(stars)}. Nothing here is a trial, and every number we publish is
             measured on a real corpus and replays
             on yours.
           </p>
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start w-full sm:w-auto">
             <Button href="#products" variant="filled">
-              See the tools
+              See what we ship
             </Button>
             <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="lg:hidden">
               Sponsor
@@ -138,70 +137,81 @@ export default async function Home() {
       <SectionFadeIn id="products" className="px-6 max-w-5xl mx-auto w-full">
         <SectionHeading title="What we ship" action={{ label: 'github.com/weekndlabs', href: 'https://github.com/weekndlabs' }} />
 
-        {/* Two products get the week, and the page says which two rather than
-            spreading seven equal cards and letting the reader guess. */}
-        <div className="mb-4 flex items-center gap-4">
-          <Badge label="In focus" />
-          <div className="h-px flex-grow bg-border" aria-hidden="true" />
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {focusProducts().map((product: Product) => (
-            <Card
-              key={product.name}
-              featured
-              title={product.name}
-              description={product.description}
-              version={product.version}
-              tags={product.tags}
-              linkHref={product.href}
-            />
-          ))}
-        </div>
-        <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {INSTALL.map(({ label, command }) => (
-            <div key={label} className="flex items-center gap-3">
-              <p className="font-mono text-xs text-muted-foreground shrink-0">{label}</p>
-              <pre className="border border-border bg-muted rounded-lg px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
-                <code>{command}</code>
-              </pre>
-            </div>
-          ))}
-        </div>
+        {/* One axis, not two. This section used to split on "In focus" and
+            "Also shipped", which said which two products got the month and
+            nothing about what any of them do. The categories are the ones the
+            nav menu uses, and each opens by saying what that layer is for. */}
+        <div className="flex flex-col gap-12 md:gap-16">
+          {byCategory().map(({ category, items }: ProductGroup) => {
+            const featured = items.filter((product) => product.focus);
+            const rows = items.filter((product) => !product.focus);
 
-        {/* The rest are shipped and maintained, not paused. They read as rows
-            because a row cannot leave a hole in a grid, and because five equal
-            cards under two large ones only muddies which is which.
+            return (
+              <div key={category}>
+                <div className="mb-5 md:mb-6 border-b border-border pb-4">
+                  <h3 className="font-mono text-xs uppercase text-muted-foreground">{category}</h3>
+                  <p className="mt-2.5 max-w-3xl text-foreground leading-relaxed text-pretty">
+                    {CATEGORY_NOTES[category]}
+                  </p>
+                </div>
 
-            Grouped by the same categories the nav menu uses, so someone who
-            opens the menu and then scrolls is looking at one map, not two. */}
-        <div className="mt-12 md:mt-16 flex flex-col gap-8 md:gap-10">
-          {byCategory(restProducts()).map(({ category, items }: ProductGroup) => (
-            <div key={category}>
-              <div className="mb-4 flex items-center gap-4">
-                <h3 className="font-mono text-xs uppercase text-muted-foreground">{category}</h3>
-                <div className="h-px flex-grow bg-border" aria-hidden="true" />
+                {featured.length > 0 && (
+                  <>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                      {featured.map((product) => (
+                        <Card
+                          key={product.name}
+                          featured
+                          title={product.name}
+                          description={product.description}
+                          version={product.version}
+                          tags={product.tags}
+                          linkHref={product.href}
+                        />
+                      ))}
+                    </div>
+
+                    {/* The commands sit with the cards they install, which is
+                        the only group that has any. */}
+                    <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                      {INSTALL.map(({ label, command }) => (
+                        <div key={label} className="flex items-center gap-3">
+                          <p className="font-mono text-xs text-muted-foreground shrink-0">{label}</p>
+                          <pre className="border border-border bg-muted rounded-lg px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
+                            <code>{command}</code>
+                          </pre>
+                        </div>
+                      ))}
+                    </div>
+                  </>
+                )}
+
+                {/* Rows, because a row cannot leave a hole in a grid and equal
+                    cards under the two large ones only muddy which is which. */}
+                {rows.length > 0 && (
+                  <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
+                    {rows.map((product) => (
+                      <li key={product.name}>
+                        <a
+                          href={product.href}
+                          {...(product.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                          className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                        >
+                          <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
+                            {product.name}
+                          </span>
+                          <span className="text-sm text-muted-foreground flex-grow">{product.description}</span>
+                          <span className="font-mono text-xs text-muted-foreground shrink-0 sm:w-16 sm:text-right">
+                            {product.version}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
-              <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
-                {items.map((tool) => (
-                  <li key={tool.name}>
-                    <a
-                      href={tool.href}
-                      {...(tool.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-                      className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-                    >
-                      <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
-                        {tool.name}
-                      </span>
-                      <span className="text-sm text-muted-foreground flex-grow">{tool.description}</span>
-                      <span className="font-mono text-xs text-muted-foreground shrink-0 sm:w-16 sm:text-right">
-                        {tool.version}
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </SectionFadeIn>
 
