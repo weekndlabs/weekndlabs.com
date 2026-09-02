@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A second push to a PR makes the first run pointless, and the queue is not
+# worth the wait on a repo this size.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
+
+      - run: npm test
+
+      # Prerendering the homepage calls api.github.com unauthenticated, and
+      # runner IPs are shared enough to get rate limited. getRepoStars and
+      # getLatestCommit both swallow that and return null, so a throttled run
+      # builds a page without a star count instead of failing. See #4.
+      - run: npm run build
