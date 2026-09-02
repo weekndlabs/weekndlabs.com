@@ -1,64 +1,23 @@
 import { Badge } from '@/components/Badge';
 import { Button } from '@/components/Button';
 import { Card } from '@/components/Card';
+import { HeroVisual } from '@/components/HeroVisual';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
 import { totalStars, starClause } from '@/lib/stars';
 import { parseCommit } from '@/lib/commits';
+import { byCategory, focusProducts, restProducts, starRepos } from '@/lib/products';
+import type { Product, ProductGroup } from '@/lib/products';
 
 export const revalidate = 3600;
 
-// Public product repos, and only public ones. Bubo and ForgePod are private, so
-// api.github.com answers 404 for them unauthenticated.
-//
-// That is not a cosmetic gap. `totalStars` refuses to publish a partial total,
-// which is the right rule, so one unreachable repo in this list deletes the star
-// count from the hero entirely. Bubo sat here and the sentence has been ending
-// at the licence in production ever since.
-const PRODUCT_REPOS = [
-  'fajarhide/selat',
-  'fajarhide/omni',
-  'fajarhide/heimsense',
-  'fajarhide/ai-pr-describer',
-];
+// The catalog, the categories and the rule about which repos are safe to count
+// all live in lib/products.js now. See issue #28.
+const PRODUCT_REPOS: string[] = starRepos();
 
 // One command per product in focus, in the order the cards appear.
 const INSTALL = [
   { label: 'start with selat', command: 'npx @fajarhide/selat' },
   { label: 'or with omni', command: 'brew install fajarhide/tap/omni' },
-];
-
-// Shipped and maintained, just not where this month goes.
-const SHIPPED = [
-  {
-    title: 'Heimsense',
-    description: 'Point Claude Code at any LLM. A Go proxy that routes your agent traffic to whichever model you actually want to pay for.',
-    version: 'v0.1.3',
-    href: 'https://github.com/fajarhide/heimsense',
-  },
-  {
-    title: 'Bubo',
-    description: 'Names the app making your Mac heavy and quits it in one click. Menu bar only, no daemon.',
-    version: 'v1.4',
-    href: 'https://bubo.weekndlabs.com',
-  },
-  {
-    title: 'ForgePod',
-    description: 'Write down the assumption, ship the smallest thing that tests it, then watch what users do instead of what they said they would.',
-    version: 'Beta',
-    href: 'https://forgepod.dev',
-  },
-  {
-    title: 'AI PR Describer',
-    description: 'Reads the diff and writes the pull request description. Any OpenAI-compatible model, one step from the Actions marketplace.',
-    version: 'v1.1.4',
-    href: 'https://github.com/marketplace/actions/ai-pull-request-describer',
-  },
-  {
-    title: 'Design System',
-    description: 'Colour, type and spacing tokens behind every product here. A test fails the build when a contrast ratio drops below WCAG.',
-    version: 'v0.5.0',
-    href: '/design',
-  },
 ];
 
 // The site repo ships often, so it earns a place in the activity feed.
@@ -145,24 +104,34 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col gap-20 md:gap-28 pb-20 md:pb-28 top-0 relative">
-      <SectionFadeIn className="pt-16 md:pt-28 px-6 max-w-5xl mx-auto text-center flex flex-col items-center">
-        <h1 className="text-4xl sm:text-5xl md:text-7xl font-display text-foreground mb-6 leading-tight tracking-tight text-balance">
-          Reliable infrastructure for the agentic era<span className="text-brand">.</span>
-        </h1>
-        <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed text-pretty">
-          Open-source tools you can keep, like the gateway, context and routing your agents run on,
-          and the design system under all of it. All MIT and Apache 2.0
-          {starClause(stars)}. None of it is a trial, and every number we publish is
-          measured on a real corpus and replays
-          on yours.
-        </p>
-        <div className="flex flex-wrap gap-4 justify-center w-full sm:w-auto">
-          <Button href="#products" variant="filled">
-            See the tools
-          </Button>
-          <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="lg:hidden">
-            Sponsor
-          </Button>
+      {/* Wider than everything below it, and deliberately so: this is the only
+          two-column section on the page, and the graph needs the second half. */}
+      <SectionFadeIn className="pt-16 md:pt-24 px-6 max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display text-foreground mb-6 leading-tight tracking-tight text-balance">
+            Reliable infrastructure for the agentic era<span className="text-brand">.</span>
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mb-8 md:mb-10 leading-relaxed text-pretty">
+            Open-source tools you can keep, like the gateway, context and routing your agents run on,
+            and the design system under all of it. All MIT and Apache 2.0
+            {starClause(stars)}. None of it is a trial, and every number we publish is
+            measured on a real corpus and replays
+            on yours.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start w-full sm:w-auto">
+            <Button href="#products" variant="filled">
+              See the tools
+            </Button>
+            <Button href="https://github.com/sponsors/fajarhide" variant="outlined" className="lg:hidden">
+              Sponsor
+            </Button>
+          </div>
+        </div>
+
+        {/* Fixed height, so the box is the same size before and after the scene
+            loads and nothing under it moves. */}
+        <div className="h-64 sm:h-80 lg:h-[26rem] w-full">
+          <HeroVisual />
         </div>
       </SectionFadeIn>
 
@@ -176,22 +145,17 @@ export default async function Home() {
           <div className="h-px flex-grow bg-border" aria-hidden="true" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <Card
-            featured
-            title="Selat"
-            description="Every agent you write ends up holding somebody else's OAuth. Selat holds it instead: connect GitHub, Google or Discord once from a browser, and your agent keeps one bearer that never rotates under it. MCP and REST see the same catalog, so Claude Desktop and a runtime you wrote yourself call the same tools."
-            version="v0.1.2"
-            tags={['TypeScript', 'MCP', 'OAuth', 'Gateway']}
-            linkHref="https://selat.weekndlabs.com"
-          />
-          <Card
-            featured
-            title="Omni"
-            description="Your agent pays twice for output it has already seen. OMNI hands back a retrievable handle instead: 97.2% off a file it reads twice, 89.6% off file reads across the corpus. Nothing deleted, nothing invented, and every number replays on your own history."
-            version="v0.7.3"
-            tags={['Rust', 'Agentic AI', 'MCP', 'Context Engine']}
-            linkHref="https://omni.weekndlabs.com"
-          />
+          {focusProducts().map((product: Product) => (
+            <Card
+              key={product.name}
+              featured
+              title={product.name}
+              description={product.description}
+              version={product.version}
+              tags={product.tags}
+              linkHref={product.href}
+            />
+          ))}
         </div>
         <div className="mt-4 md:mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
           {INSTALL.map(({ label, command }) => (
@@ -206,30 +170,39 @@ export default async function Home() {
 
         {/* The rest are shipped and maintained, not paused. They read as rows
             because a row cannot leave a hole in a grid, and because five equal
-            cards under two large ones only muddies which is which. */}
-        <div className="mt-12 md:mt-16 mb-4 flex items-center gap-4">
-          <h3 className="font-mono text-xs uppercase text-muted-foreground">Also shipped</h3>
-          <div className="h-px flex-grow bg-border" aria-hidden="true" />
-        </div>
-        <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
-          {SHIPPED.map((tool) => (
-            <li key={tool.title}>
-              <a
-                href={tool.href}
-                {...(tool.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
-                className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
-              >
-                <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
-                  {tool.title}
-                </span>
-                <span className="text-sm text-muted-foreground flex-grow">{tool.description}</span>
-                <span className="font-mono text-xs text-muted-foreground shrink-0 sm:w-16 sm:text-right">
-                  {tool.version}
-                </span>
-              </a>
-            </li>
+            cards under two large ones only muddies which is which.
+
+            Grouped by the same categories the nav menu uses, so someone who
+            opens the menu and then scrolls is looking at one map, not two. */}
+        <div className="mt-12 md:mt-16 flex flex-col gap-8 md:gap-10">
+          {byCategory(restProducts()).map(({ category, items }: ProductGroup) => (
+            <div key={category}>
+              <div className="mb-4 flex items-center gap-4">
+                <h3 className="font-mono text-xs uppercase text-muted-foreground">{category}</h3>
+                <div className="h-px flex-grow bg-border" aria-hidden="true" />
+              </div>
+              <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
+                {items.map((tool) => (
+                  <li key={tool.name}>
+                    <a
+                      href={tool.href}
+                      {...(tool.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                      className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
+                    >
+                      <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
+                        {tool.name}
+                      </span>
+                      <span className="text-sm text-muted-foreground flex-grow">{tool.description}</span>
+                      <span className="font-mono text-xs text-muted-foreground shrink-0 sm:w-16 sm:text-right">
+                        {tool.version}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </SectionFadeIn>
 
       <SectionFadeIn id="philosophy" className="px-6 max-w-5xl mx-auto w-full">
