@@ -1,34 +1,43 @@
-# WeekndLabs
+# weekndlabs.com
 
-> **Agents run here.** Five shipped developer tools for the agentic era, open source and built in Indonesia.
+The site behind [weekndlabs.com](https://weekndlabs.com). Open-source
+infrastructure for agents: a gateway for the credentials they hold, a context
+layer for what they read twice, and routing for the models they call.
 
-WeekndLabs is an open-source agentic AI lab building foundational developer tools that run directly on your machines. No VC roadmap theater, no opaque enterprise sales calls, and no bullshit.
+Everything the lab ships is listed on the site itself and in
+[github.com/weekndlabs](https://github.com/weekndlabs). This README does not
+repeat the catalog, because a copy of it here goes stale the moment the shelf
+grows. That is the same failure `lib/hero-count.test.js` was written for.
 
-## Philosophy
+[Read the commitment to open source](https://weekndlabs.com/philosophy)
 
-We believe that foundational developer tools should not be gated behind arbitrary paywalls. Open source is not just a distribution strategy for us—it's a strict commitment to the builders who trust our stack.
+## The stack
 
-[-> Read our full commitment to open source](https://weekndlabs.com/philosophy)
+- **Framework**: Next.js 14, App Router.
+- **Design**: [`@weekndlabs/design`](https://design.weekndlabs.com) owns every
+  colour, radius, spacing step and type token. `app/globals.css` declares none of
+  its own on purpose: a value defined here is one the package's contrast gate
+  cannot measure, which is how something that fails WCAG AA ships with the tests
+  green. See #16.
+- **Hero**: a [three.js](https://threejs.org) scene in
+  `components/HeroGraph.tsx`. Agents on the left, one gateway in the middle,
+  tools on the right, and particles carrying requests through it. Loaded through
+  `next/dynamic` with `ssr: false`, so it stays out of the first load. It draws a
+  single static frame under `prefers-reduced-motion`, and stops entirely when the
+  tab is hidden or the canvas scrolls out of view.
+- **Live data**: star counts and recent commits come from the GitHub API on an
+  hourly revalidation. When a lookup fails the page drops the affected line
+  rather than substituting a stale number, and writes a `[github]` line to the
+  log so the drop is visible.
 
-## The Stack
-
-- **Framework**: Next.js 14 (App Router)
-- **Styling**: TailwindCSS. Colour tokens live in [`app/globals.css`](app/globals.css) as RGB triplets, so one set serves both themes and Tailwind's alpha modifiers still resolve.
-- **Typography**: [Bricolage Grotesque](https://fonts.google.com/specimen/Bricolage+Grotesque) for headings, [Inter](https://fonts.google.com/specimen/Inter) for body, [JetBrains Mono](https://fonts.google.com/specimen/JetBrains+Mono) for anything a machine emitted: commands, versions, tags, commit subjects.
-- **Themes**: light and dark. Follows the OS by default; the nav toggle overrides it and the choice persists. Amber on navy in the dark, the same amber deepened to hold as text on paper in the light.
-- **Live data**: star counts and recent commits come from the GitHub API on an hourly ISR revalidation. When a lookup fails the page drops the affected line rather than substituting a stale number.
-- **SEO & PWA**: Dynamic Open Graph Images (`next/og`), Native Manifest Generation
-
-## Local Development
-
-First, run the development server:
+## Local development
 
 ```bash
 npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open [http://localhost:3000](http://localhost:3000).
 
 ## Configuration
 
@@ -40,10 +49,23 @@ One optional environment variable.
 
 The homepage makes nine calls per hourly revalidation. Without a token those nine
 come out of an anonymous budget shared with everything else leaving the same IP,
-and on a shared serverless pool that can run out. When it does, the star count and
-the activity feed drop out of the page and a `[github]` line lands in the deploy
-log. A read-only token with no scopes is enough.
+and on a shared serverless pool that can run out. A read-only token with no
+scopes is enough. See #4.
+
+## Checks
+
+```bash
+npm run lint
+npm test
+npm run build
+```
+
+All three run on every pull request and on pushes to `main`
+(`.github/workflows/ci.yml`). Several of the tests exist because the thing they
+guard already shipped once: `lib/stars.test.js` for a hardcoded star count,
+`lib/hero-count.test.js` for a tool count that went stale twice, and
+`lib/readme.test.js` for this file.
 
 ## Licensing
 
-The tools and website are open-source and released under the [MIT License](LICENSE).
+The tools and this site are open source under the [MIT License](LICENSE).
