@@ -122,7 +122,8 @@ export default async function Home() {
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mb-8 md:mb-10 leading-relaxed text-pretty">
             A gateway for the credentials your agents hold, a context layer for what they read
             twice, and routing for the models they call. All of it open source under MIT and
-            Apache 2.0{starClause(stars)}. Nothing here is a trial, and every number we publish is
+            Apache 2.0{starClause(stars)}. The build you run yourself is the complete one, never a
+            trial, and every number we publish is
             measured on a real corpus and replays
             on yours.
           </p>
@@ -192,6 +193,24 @@ export default async function Home() {
                         </div>
                       ))}
                     </div>
+
+                    {/* Selat takes money and the landing page never said so, which
+                        is what made this read as a shelf rather than a company.
+                        One line, next to the command it is the alternative to.
+                        Not a pricing table: that lives on the product's own site
+                        and would undo the positioning settled in #28. See #36. */}
+                    <p className="mt-4 text-sm text-muted-foreground">
+                      Both run on your own machine, complete, with no account.{' '}
+                      <a
+                        href="https://selat.weekndlabs.com/app"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-brand underline underline-offset-4 hover:text-brand-strong transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm"
+                      >
+                        Selat also runs hosted
+                      </a>{' '}
+                      for teams who would rather not.
+                    </p>
                   </>
                 )}
 

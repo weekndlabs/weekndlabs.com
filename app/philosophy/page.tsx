@@ -68,7 +68,7 @@ export default function Philosophy() {
               <span className="text-brand mt-1 shrink-0">01</span>
               <div>
                 <strong className="text-foreground block">Managed Cloud Services</strong>
-                For teams who would rather not run this themselves, we offer hosted versions of our tools. The self-hosted build stays complete either way.
+                Selat runs as a hosted gateway for teams who would rather not operate one, priced on tool calls rather than seats. The self-hosted build stays complete either way, Apache 2.0, no account.
               </div>
             </li>
             <li className="flex gap-4 items-start">
