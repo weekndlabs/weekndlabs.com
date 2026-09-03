@@ -58,7 +58,7 @@ export default async function Image() {
             Reliable infrastructure for the agentic era.
           </div>
           <div style={{ display: 'flex', fontSize: 30, color: SOFT, marginTop: 28, maxWidth: 860 }}>
-            Agent context, LLM routing, pull request automation, macOS performance.
+            A gateway for agent credentials, a context layer, and model routing.
           </div>
         </div>
 
@@ -77,7 +77,10 @@ export default async function Image() {
           }}
         >
           <span style={{ color: BLUE }}>$</span>
-          <span style={{ color: INK }}>brew install fajarhide/tap/omni</span>
+          {/* Selat's command, not Omni's. The subhead above now leads with the
+              gateway and so does the landing page, so a card advertising one and
+              installing the other reads as two different products. */}
+          <span style={{ color: INK }}>npx @fajarhide/selat</span>
         </div>
       </div>
     ),
