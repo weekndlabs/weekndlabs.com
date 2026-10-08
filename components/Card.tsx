@@ -7,9 +7,6 @@ interface CardProps {
   version?: string;
   tags?: string[];
   linkHref?: string;
-  /** One of the products in focus. Only the title grows: the pair sits side by
-   *  side, so extra padding buys height rather than emphasis. */
-  featured?: boolean;
   className?: string;
 }
 
@@ -19,7 +16,6 @@ export const Card: React.FC<CardProps> = ({
   version,
   tags = [],
   linkHref,
-  featured = false,
   className = ''
 }) => {
   const CardContent = (
@@ -28,11 +24,7 @@ export const Card: React.FC<CardProps> = ({
           Every card here is shipped, so a row of loud SHIPPED pills carried no
           information; the number is the part that differs. */}
       <div className="flex items-baseline justify-between gap-4">
-        <h3
-          className={`font-display text-foreground group-hover:text-brand transition-colors ${
-            featured ? 'text-2xl' : 'text-xl'
-          }`}
-        >
+        <h3 className="font-display text-xl text-foreground group-hover:text-brand transition-colors">
           {title}
         </h3>
         {version && (
