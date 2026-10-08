@@ -1,6 +1,4 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 interface SectionFadeInProps {
   children: React.ReactNode;
@@ -8,21 +6,11 @@ interface SectionFadeInProps {
   id?: string;
 }
 
-export const SectionFadeIn: React.FC<SectionFadeInProps> = ({ children, className = '', id }) => {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  return (
-    <section
-      id={id}
-      className={`transition-all duration-1000 ease-out transform motion-reduce:transition-none ${
-        mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-      } ${className}`}
-    >
-      {children}
-    </section>
-  );
-};
+// A server component on purpose. The reveal is the `.reveal` rule in
+// globals.css, so the section is visible in the HTML as sent and no script has
+// to run before anyone can read it. See issue #41.
+export const SectionFadeIn: React.FC<SectionFadeInProps> = ({ children, className = '', id }) => (
+  <section id={id} className={`reveal ${className}`}>
+    {children}
+  </section>
+);

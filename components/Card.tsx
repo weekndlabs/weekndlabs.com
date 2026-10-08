@@ -57,7 +57,7 @@ export const Card: React.FC<CardProps> = ({
         </div>
         {linkHref && (
           <svg
-            className="w-5 h-5 shrink-0 text-muted-foreground group-hover:text-brand transition-colors"
+            className="w-5 h-5 shrink-0 text-muted-foreground transition group-hover:text-brand group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transform-none"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
