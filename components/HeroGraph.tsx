@@ -6,7 +6,6 @@ import {
   BufferGeometry,
   CanvasTexture,
   Color,
-  Float32BufferAttribute,
   Group,
   LineBasicMaterial,
   LinearFilter,
@@ -43,22 +42,28 @@ import {
 
 const GATEWAY = new Vector3(0, 0, 0);
 
-// Uneven y and z on purpose. A symmetric fan reads as a logo; a slightly
-// irregular one reads as infrastructure.
+// Uneven on all three axes on purpose. A symmetric fan reads as a logo, and two
+// ruled columns read as a wiring diagram. See issue #43.
 const AGENTS = [
-  new Vector3(-5.2, 2.7, -0.9),
-  new Vector3(-5.2, 0.95, 0.7),
-  new Vector3(-5.2, -0.95, -0.45),
-  new Vector3(-5.2, -2.7, 0.8),
+  new Vector3(-5.5, 2.7, -0.9),
+  new Vector3(-4.7, 0.95, 0.7),
+  new Vector3(-5.3, -0.95, -0.45),
+  new Vector3(-4.9, -2.7, 0.8),
 ];
 
 const TOOLS = [
-  new Vector3(5.2, 3.0, 0.6),
-  new Vector3(5.2, 1.5, -0.8),
-  new Vector3(5.2, 0, 0.45),
-  new Vector3(5.2, -1.5, -0.6),
-  new Vector3(5.2, -3.0, 0.9),
+  new Vector3(4.8, 3.0, 0.6),
+  new Vector3(5.5, 1.5, -0.8),
+  new Vector3(5.0, 0, 0.45),
+  new Vector3(5.6, -1.5, -0.6),
+  new Vector3(4.9, -3.0, 0.9),
 ];
+
+/** Every node that has a path to the gateway: agents first, then tools. */
+const ENDS = [...AGENTS, ...TOOLS];
+
+/** Straight pieces per drawn path. Enough that the curve shows no corners. */
+const SEGMENTS = 24;
 
 const PARTICLES = 950;
 
@@ -160,11 +165,28 @@ export default function HeroGraph() {
     const dot = radialTexture([[0, 1], [0.4, 0.9], [1, 0]]);
     const glow = radialTexture([[0, 0.8], [0.3, 0.32], [0.65, 0.07], [1, 0]]);
 
-    for (const position of [...AGENTS, ...TOOLS]) {
+    const nodes = ENDS.map((position) => {
       const node = new Mesh(nodeGeometry, nodeMaterial);
       node.position.copy(position);
       graph.add(node);
-    }
+      return node;
+    });
+
+    // Where each node is this frame, and the control point of its path. Both
+    // move, so the edges and the traffic are computed from these and never
+    // from the resting positions above.
+    const live = ENDS.map((position) => position.clone());
+    const bend = ENDS.map((position) => position.clone());
+
+    /** A point on the path from node `i` to the gateway: 0 at the node, 1 at the gateway. */
+    const along = (out: Vector3, i: number, u: number) => {
+      const k = 1 - u;
+      return out
+        .copy(live[i])
+        .multiplyScalar(k * k)
+        .addScaledVector(bend[i], 2 * k * u)
+        .addScaledVector(GATEWAY, u * u);
+    };
 
     const gateway = new Mesh(gatewayGeometry, gatewayMaterial);
     graph.add(gateway);
@@ -181,25 +203,21 @@ export default function HeroGraph() {
     wideHalo.scale.setScalar(8.2);
     graph.add(halo, wideHalo);
 
+    const edgePosition = new BufferAttribute(new Float32Array(ENDS.length * SEGMENTS * 6), 3);
     const edgeGeometry = new BufferGeometry();
-    edgeGeometry.setAttribute(
-      'position',
-      new Float32BufferAttribute(
-        [
-          ...AGENTS.flatMap((a) => [a.x, a.y, a.z, GATEWAY.x, GATEWAY.y, GATEWAY.z]),
-          ...TOOLS.flatMap((t) => [GATEWAY.x, GATEWAY.y, GATEWAY.z, t.x, t.y, t.z]),
-        ],
-        3
-      )
-    );
-    graph.add(new LineSegments(edgeGeometry, edgeMaterial));
+    edgeGeometry.setAttribute('position', edgePosition);
+    const edges = new LineSegments(edgeGeometry, edgeMaterial);
+    // Same reason as the traffic cloud below: the bounds are taken once, while
+    // every position is still zero.
+    edges.frustumCulled = false;
+    graph.add(edges);
 
     // One request per particle: which agent it came from, which tool it is
-    // headed for, how fast, where in the journey it started, and how far off the
-    // straight line it drifts. Fixed at setup, so the frame loop only lerps.
+    // headed for, how fast, where in the journey it started, and how far off
+    // its path it drifts. Fixed at setup, so the frame loop only evaluates.
     const traffic = Array.from({ length: PARTICLES }, (_, i) => ({
-      from: AGENTS[i % AGENTS.length],
-      to: TOOLS[i % TOOLS.length],
+      from: i % AGENTS.length,
+      to: AGENTS.length + (i % TOOLS.length),
       speed: 0.1 + Math.random() * 0.11,
       phase: Math.random(),
       drift: new Vector3(
@@ -300,6 +318,27 @@ export default function HeroGraph() {
       halo.scale.setScalar(4.4 * (1 + Math.sin(seconds * 1.6 + 0.6) * 0.06));
       wideHalo.scale.setScalar(8.2 * (1 + Math.sin(seconds * 1.1 + 1.2) * 0.05));
 
+      for (let i = 0; i < ENDS.length; i += 1) {
+        // Each node on its own phase, or a whole side rises and falls as one.
+        const phase = i * 1.7;
+        live[i].copy(ENDS[i]);
+        live[i].y += Math.sin(seconds * 0.6 + phase) * 0.14;
+        live[i].z += Math.cos(seconds * 0.45 + phase) * 0.18;
+        nodes[i].position.copy(live[i]);
+        // Level with the node and a third of the way in, so a path leaves flat
+        // and swings into the gateway. The sway is what makes the edges breathe.
+        bend[i].set(live[i].x * 0.35, live[i].y + Math.sin(seconds * 0.5 + phase) * 0.3, live[i].z);
+      }
+
+      const lines = edgePosition.array as Float32Array;
+      for (let i = 0, o = 0; i < ENDS.length; i += 1) {
+        for (let s = 0; s < SEGMENTS; s += 1, o += 6) {
+          along(at, i, s / SEGMENTS).toArray(lines, o);
+          along(at, i, (s + 1) / SEGMENTS).toArray(lines, o + 3);
+        }
+      }
+      edgePosition.needsUpdate = true;
+
       const positions = trafficPosition.array as Float32Array;
       const colors = trafficColor.array as Float32Array;
 
@@ -310,7 +349,11 @@ export default function HeroGraph() {
         // to tool, so every particle actually passes through the middle.
         const leg = journey < 0.5;
         const local = leg ? journey * 2 : (journey - 0.5) * 2;
-        at.lerpVectors(leg ? request.from : GATEWAY, leg ? GATEWAY : request.to, local);
+        // Part eased, so a request slows into the gateway and leaves it picking
+        // up speed. Fully eased it would stop there and the middle would clot.
+        const near = local + 0.4 * (leg ? local * (1 - local) : local * (local - 1));
+        if (leg) along(at, request.from, near);
+        else along(at, request.to, 1 - near);
         // Drift peaks mid-leg and vanishes at both ends, so streams have body
         // in between and still converge exactly on the nodes.
         at.addScaledVector(request.drift, Math.sin(local * Math.PI));
