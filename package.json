@@ -15,7 +15,6 @@
     "@mdx-js/react": "^3.1.0",
     "@tailwindcss/typography": "^0.5.16",
     "@weekndlabs/design": "^0.5.0",
-    "framer-motion": "^11.11.17",
     "gray-matter": "^4.0.3",
     "lucide-react": "^0.461.0",
     "next": "14.2.16",

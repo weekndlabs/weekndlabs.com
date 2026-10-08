@@ -47,8 +47,7 @@ html {
 }
 
 /* The navbar is sticky and 4rem tall, so an anchor target would otherwise land
-   underneath it. The extra rem covers the 1rem a section still travels while its
-   mount transition settles.
+   underneath it. The extra 2rem is air between the two.
 
    Not scoped to :target. A same-page hash link scrolls inside the same tick that
    pushState sets the hash, before :target has been restyled, so the margin has to
@@ -60,5 +59,63 @@ section[id] {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+}
+
+/* Motion. Plain CSS on purpose: the server HTML is visible as sent, and a
+   browser without scroll timelines (Firefox, for now) shows the page still
+   instead of hiding it. See issue #41. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem) scale(0.985);
+  }
+}
+
+/* The hero's version also comes into focus. Kept off the scroll reveal: a
+   blur on a whole section repaints it on every scroll frame. */
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(1rem) scale(0.97);
+    filter: blur(6px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Once, on load: the hero's headline, paragraph and buttons in turn. The
+     curve overshoots a little, so they land instead of stopping. Written out
+     because the design package has ease-out and ease-in-out and neither
+     settles, and this file declares no properties of its own. */
+  .rise > * {
+    animation: settle calc(var(--wl-duration-slow) * 2) cubic-bezier(0.34, 1.4, 0.64, 1) both;
+  }
+  .rise > :nth-child(2) {
+    animation-delay: calc(var(--wl-duration-base) / 2);
+  }
+  .rise > :nth-child(3) {
+    animation-delay: var(--wl-duration-base);
+  }
+
+  @supports (animation-timeline: view()) {
+    /* Driven by scroll position, so there is no duration to set. The range is
+       a length and not a percentage: a percentage of a tall section leaves it
+       half faded for most of a screen. */
+    .reveal,
+    .reveal-each > * {
+      animation: rise var(--wl-ease-out) both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 10rem;
+      transform-origin: 50% 0;
+    }
+
+    /* Cards in one row cross the viewport edge together, so the later ones
+       start a little further in. */
+    .reveal-each > :nth-child(2) {
+      animation-range: entry 3rem entry 13rem;
+    }
+    .reveal-each > :nth-child(3) {
+      animation-range: entry 6rem entry 16rem;
+    }
   }
 }

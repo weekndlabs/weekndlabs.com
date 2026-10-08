@@ -115,7 +115,7 @@ export default async function Home() {
       {/* Wider than everything below it, and deliberately so: this is the only
           two-column section on the page, and the graph needs the second half. */}
       <SectionFadeIn className="pt-16 md:pt-24 px-6 max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
-        <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+        <div className="rise flex flex-col items-center text-center lg:items-start lg:text-left">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display text-foreground mb-6 leading-tight tracking-tight text-balance">
             Reliable infrastructure for the agentic era<span className="text-brand">.</span>
           </h1>
@@ -167,7 +167,7 @@ export default async function Home() {
 
                 {featured.length > 0 && (
                   <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div className="reveal-each grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                       {featured.map((product) => (
                         <Card
                           key={product.name}
