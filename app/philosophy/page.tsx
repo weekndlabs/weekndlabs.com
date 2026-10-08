@@ -61,7 +61,7 @@ export default function Philosophy() {
         </h3>
         <div className="space-y-6 text-muted-foreground leading-relaxed mb-10">
           <p>
-            Building high-performance software requires time, electricity, and coffee. We sustain our operations through two transparent channels without relying on external VCs dictating our roadmap:
+            Building high-performance software requires time, electricity, and coffee. We sustain our operations through two transparent channels, and the roadmap stays ours to set whoever funds the work:
           </p>
           <ul className="space-y-4 list-none pl-0">
              <li className="flex gap-4 items-start">
