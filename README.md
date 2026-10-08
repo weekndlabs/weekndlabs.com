@@ -25,9 +25,9 @@ grows. That is the same failure `lib/hero-count.test.js` was written for.
   `next/dynamic` with `ssr: false`, so it stays out of the first load. It draws a
   single static frame under `prefers-reduced-motion`, and stops entirely when the
   tab is hidden or the canvas scrolls out of view.
-- **Live data**: star counts and recent commits come from the GitHub API on an
-  hourly revalidation. When a lookup fails the page drops the affected line
-  rather than substituting a stale number, and writes a `[github]` line to the
+- **Live data**: stars, releases and contributors come from the GitHub API on an
+  hourly revalidation. When a lookup fails the page drops the affected count
+  rather than substituting a stale or partial number, and writes a `[github]` line to the
   log so the drop is visible.
 
 ## Local development

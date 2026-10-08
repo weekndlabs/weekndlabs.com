@@ -20,7 +20,9 @@ export interface Product {
   blurb: string;
   description: string;
   tags?: string[];
-  focus?: boolean;
+  /** Set on the three that make up the agent stack. */
+  layer?: string;
+  upstream?: string;
   /** Set only when the repo is public and safe to count. */
   repo?: string;
 }
