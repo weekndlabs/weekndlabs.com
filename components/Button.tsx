@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({
   // min-h-11 keeps every call to action at a thumb-sized tap target on phones.
   // The focus ring is not decoration: without it a keyboard user cannot see
   // where they are, which is what the bare focus:outline-none used to cost.
-  const baseClasses = "inline-flex items-center justify-center font-mono text-sm uppercase px-5 py-2.5 min-h-11 transition-colors duration-200 border rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  const baseClasses = "inline-flex items-center justify-center font-sans text-sm font-medium px-5 py-2.5 min-h-11 transition-colors duration-200 border rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background";
   
   // One weighted button per view, and the rest sit quiet.
   //

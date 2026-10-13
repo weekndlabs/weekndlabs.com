@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
+import { SITE, siteGraph } from '@/lib/site'
 
 /**
  * The exact files @weekndlabs/design ships, rather than the same families from
@@ -30,24 +31,26 @@ const jetbrainsMono = localFont({
 })
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://weekndlabs.com'),
-  title: 'WeekndLabs | Agents run here.',
-  description: 'Open-source developer tools from Indonesia. Selat gives agents one gateway to every upstream, Omni takes 89.6% off the file reads an agent repeats, Heimsense points Claude Code at any LLM, Bubo names the app slowing down your Mac.',
+  metadataBase: new URL(SITE.url),
+  title: SITE.title,
+  description: SITE.description,
+  // Relative, so each route canonicalises to itself rather than to the home page.
+  alternates: { canonical: './' },
   keywords: ['Agentic AI', 'Open Source', 'AI Infrastructure', 'Developer Tools', 'WeekndLabs', 'LLM Agents', 'Selat', 'Omni', 'Claude Code', 'token optimization', 'MCP', 'OAuth gateway'],
-  authors: [{ name: 'WeekndLabs' }],
-  creator: 'WeekndLabs',
+  authors: [{ name: SITE.name }],
+  creator: SITE.name,
   openGraph: {
-    title: 'WeekndLabs | Agents run here.',
-    description: 'WeekndLabs builds developer tools for the agentic era: an OAuth tool gateway for agents, agent context, LLM routing, pull request automation, macOS performance, and founder workflow. Open source, built in Indonesia.',
-    url: 'https://weekndlabs.com',
-    siteName: 'WeekndLabs',
+    title: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    siteName: SITE.name,
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'WeekndLabs | Agents run here.',
-    description: 'WeekndLabs builds developer tools for the agentic era. Open source, built in Indonesia.',
+    title: SITE.title,
+    description: SITE.description,
     creator: '@weekndlabs',
   },
   robots: {
@@ -55,7 +58,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   appleWebApp: {
-    title: 'WeekndLabs',
+    title: SITE.name,
     statusBarStyle: 'black-translucent',
     capable: true,
   },
@@ -93,6 +96,9 @@ export default function RootLayout({
     <html lang="en" data-theme="light" suppressHydrationWarning className={`${inter.variable} ${jetbrainsMono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        {/* What the site is, for engines that read structure rather than prose.
+            Built from the same catalog the page renders, so it cannot drift. */}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteGraph()) }} />
       </head>
       <body className="font-sans bg-background text-foreground min-h-screen flex flex-col">
         <Navbar />

@@ -98,7 +98,7 @@ export const Navbar = () => {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:text-brand transition-colors group"
+          className="flex min-h-11 items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:text-brand transition-colors group"
         >
           {/* No radius here. The mark carries its own silhouette, and a CSS corner
               on top of a squircle clips the curve it already has. */}
@@ -117,7 +117,7 @@ export const Navbar = () => {
             aria-controls="products-menu"
             onClick={() => (products ? setProducts(false) : openMenu())}
             onMouseEnter={() => canHover && openMenu()}
-            className={`font-mono text-sm border-b transition-colors inline-flex items-center gap-1.5 ${
+            className={`text-sm min-h-11 border-b transition-colors inline-flex items-center gap-1.5 ${
               products
                 ? 'text-brand border-brand'
                 : 'text-muted-foreground border-transparent hover:text-foreground hover:border-border'
@@ -137,7 +137,7 @@ export const Navbar = () => {
               href={href}
               onMouseEnter={() => canHover && closeMenu()}
               aria-current={pathname === href ? 'page' : undefined}
-              className={`font-mono text-sm border-b transition-colors ${
+              className={`text-sm min-h-11 inline-flex items-center border-b transition-colors ${
                 pathname === href
                   ? 'text-brand border-brand'
                   : 'text-muted-foreground border-transparent hover:text-foreground hover:border-border'
@@ -150,7 +150,7 @@ export const Navbar = () => {
 
         <div className="flex items-center gap-3 sm:gap-4">
           <ThemeToggle />
-          <Button variant="filled" href="https://github.com/sponsors/fajarhide" className="hidden lg:inline-flex">
+          <Button variant="outlined" href="https://github.com/sponsors/fajarhide" className="hidden lg:inline-flex">
             Sponsor
           </Button>
           <Button variant="outlined" href="https://github.com/weekndlabs" className="hidden md:inline-flex">
@@ -162,7 +162,7 @@ export const Navbar = () => {
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="md:hidden inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="md:hidden inline-flex h-11 w-11 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:border-brand hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
           </button>
@@ -188,9 +188,11 @@ export const Navbar = () => {
         <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
           {GROUPS.map(({ category, items }) => (
             <div key={category}>
-              <h2 className="font-mono text-xs uppercase text-muted-foreground border-b border-border pb-3">
+              {/* A label, not a heading: as an h2 it put four headings ahead of
+                  the page's h1 in the document outline. */}
+              <p className="text-sm font-medium text-muted-foreground border-b border-border pb-3">
                 {category}
-              </h2>
+              </p>
               <ul className="list-none pl-0 mt-1">
                 {items.map((product) => (
                   <li key={product.name}>
@@ -241,7 +243,7 @@ export const Navbar = () => {
         >
           {GROUPS.map(({ category, items }) => (
             <div key={category} className="py-3 border-b border-border/60">
-              <h2 className="font-mono text-xs uppercase text-muted-foreground">{category}</h2>
+              <p className="text-sm font-medium text-muted-foreground">{category}</p>
               <ul className="list-none pl-0 mt-2 flex flex-col gap-2.5">
                 {items.map((product) => (
                   <li key={product.name}>
@@ -249,7 +251,7 @@ export const Navbar = () => {
                       href={product.href}
                       {...linkTarget(product.href)}
                       onClick={() => setOpen(false)}
-                      className="flex items-baseline justify-between gap-3 font-mono text-sm text-foreground active:text-brand"
+                      className="flex min-h-11 items-center justify-between gap-3 text-sm text-foreground active:text-brand"
                     >
                       {product.name}
                       <span className="text-xs text-muted-foreground">{product.version}</span>
@@ -265,7 +267,7 @@ export const Navbar = () => {
               href={href}
               onClick={() => setOpen(false)}
               aria-current={pathname === href ? 'page' : undefined}
-              className={`font-mono text-sm py-3.5 border-b border-border/60 transition-colors ${
+              className={`text-sm py-3.5 border-b border-border/60 transition-colors ${
                 pathname === href ? 'text-brand' : 'text-foreground active:text-brand'
               }`}
             >
@@ -274,7 +276,7 @@ export const Navbar = () => {
             </Link>
           ))}
           <div className="flex flex-col gap-3 pt-4 pb-2 mt-2 border-t border-border">
-            <Button variant="filled" href="https://github.com/sponsors/fajarhide" className="w-full">
+            <Button variant="outlined" href="https://github.com/sponsors/fajarhide" className="w-full">
               Sponsor
             </Button>
             <Button variant="outlined" href="https://github.com/weekndlabs" className="w-full">
