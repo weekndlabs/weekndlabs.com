@@ -1,4 +1,5 @@
 import { SectionFadeIn } from '@/components/SectionFadeIn';
+import { SITE } from '@/lib/site';
 
 export const metadata = {
   title: 'Privacy Policy | WeekndLabs',
@@ -18,10 +19,10 @@ export default function PrivacyPolicy() {
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
           <p>
-            <strong className="text-foreground">Last Updated</strong>: March 2026
+            <strong className="text-foreground">Last Updated</strong>: October 2026
           </p>
           <p>
-            At WeekndLabs (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;), we build open-source tools and infrastructure for agentic AI. Through our domains (weekndlabs.com, forgepod.dev, and related services), our goal is to provide a transparent interaction.
+            WeekndLabs is operated by {SITE.legalName} (&quot;we&quot;, &quot;us&quot;, or &quot;our&quot;). We build open-source tools and infrastructure for agentic AI. Through our domains (weekndlabs.com, forgepod.dev, and related services), our goal is to provide a transparent interaction.
           </p>
           <p>
             Because the vast majority of our products are CLI tools and self-hosted infrastructure (like Omni and ForgePod) that run directly on your machines, <strong className="text-foreground">we collect virtually zero telemetry by default</strong>. 

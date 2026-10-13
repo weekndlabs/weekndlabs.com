@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import { SITE } from '@/lib/site';
 
 export const Footer = () => {
   return (
@@ -8,7 +9,7 @@ export const Footer = () => {
         
         <div>
           <p className="text-sm text-muted-foreground">
-            &copy; 2026 WeekndLabs.
+            &copy; 2026 {SITE.legalName}.
           </p>
         </div>
 
@@ -25,6 +26,9 @@ export const Footer = () => {
           <a href="https://github.com/weekndlabs" target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm text-muted-foreground hover:text-foreground transition-colors">
             GitHub
           </a>
+          <Link href="/about" className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm text-muted-foreground hover:text-foreground transition-colors">
+            About
+          </Link>
           <Link href="/philosophy" className="inline-flex min-h-11 min-w-11 items-center justify-center text-sm text-muted-foreground hover:text-foreground transition-colors">
             Philosophy
           </Link>

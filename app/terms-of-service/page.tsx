@@ -1,4 +1,5 @@
 import { SectionFadeIn } from '@/components/SectionFadeIn';
+import { SITE } from '@/lib/site';
 
 export const metadata = {
   title: 'Terms of Service | WeekndLabs',
@@ -18,10 +19,10 @@ export default function TermsOfService() {
 
         <div className="space-y-6 text-muted-foreground leading-relaxed">
           <p>
-            <strong className="text-foreground">Last Updated</strong>: March 2026
+            <strong className="text-foreground">Last Updated</strong>: October 2026
           </p>
           <p>
-            By accessing or using the services, websites, and applications (&quot;products&quot;) provided by WeekndLabs, you agree to be bound by these Terms of Service. If you do not agree with them, please do not use our managed services.
+            By accessing or using the services, websites, and applications (&quot;products&quot;) provided by WeekndLabs, which is operated by {SITE.legalName}, you agree to be bound by these Terms of Service. If you do not agree with them, please do not use our managed services.
           </p>
 
           <h3 className="text-2xl font-display text-foreground pt-8 pb-2">
@@ -64,7 +65,7 @@ export default function TermsOfService() {
           </h3>
           <p>For legal inquiries, abuse reporting, or clarification on these terms, contact:</p>
           <ul className="list-none pt-2">
-            <li><strong className="text-foreground">Email</strong>: hi@weekndlabs.com</li>
+            <li><strong className="text-foreground">Email</strong>: {SITE.email}</li>
           </ul>
         </div>
       </SectionFadeIn>

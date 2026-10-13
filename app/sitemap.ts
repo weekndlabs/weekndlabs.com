@@ -19,6 +19,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
+      url: 'https://weekndlabs.com/about',
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
       url: 'https://weekndlabs.com/philosophy',
       changeFrequency: 'monthly',
       priority: 0.8,

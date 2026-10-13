@@ -6,6 +6,7 @@ import { releaseCount, uniqueContributors } from '@/lib/traction';
 import { githubHeaders, warnGithub } from '@/lib/github';
 import { CATEGORY_NOTES, PRODUCTS, byCategory, starRepos } from '@/lib/products';
 import type { Product, ProductGroup } from '@/lib/products';
+import { SITE } from '@/lib/site';
 
 export const revalidate = 3600;
 
@@ -25,9 +26,9 @@ const INSTALL: Record<string, string> = {
   Omni: 'brew install fajarhide/tap/omni',
 };
 
-// Already published on /terms-of-service. A link and not a form: a form needs
-// a mail route, spam handling and a success state, and none of that exists.
-const CONTACT = 'mailto:hi@weekndlabs.com';
+// A link and not a form: a form needs a mail route, spam handling and a success
+// state, and none of that exists.
+const CONTACT = `mailto:${SITE.email}`;
 
 // Every count on the page comes through here, so a rate limit and a renamed
 // repo leave the same one-line trace. See issue #4.
@@ -287,8 +288,8 @@ export default async function Home() {
               Work with us<span className="text-brand">.</span>
             </h2>
             <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
-              Partnerships, integrations and investment conversations start with an email to
-              hi@weekndlabs.com.
+              Partnerships, integrations and investment conversations start with an email to{' '}
+              {SITE.email}.
             </p>
           </div>
           <Button href={CONTACT} variant="filled" className="shrink-0 self-start md:self-auto">
