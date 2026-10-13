@@ -17,6 +17,7 @@ const GROUPS = byCategory();
 const LINKS = [
   { href: '/design', label: 'Design' },
   { href: '/philosophy', label: 'Philosophy' },
+  { href: '/about', label: 'About' },
 ];
 
 const isExternal = (href: string) => !href.startsWith('/');
@@ -140,7 +141,7 @@ export const Navbar = () => {
               href={href}
               onMouseEnter={() => canHover && closeMenu()}
               aria-current={pathname === href ? 'page' : undefined}
-              className={`text-sm min-h-11 inline-flex items-center border-b transition-colors ${
+              className={`text-sm min-h-11 min-w-11 inline-flex items-center justify-center border-b transition-colors ${
                 pathname === href
                   ? 'text-brand border-brand'
                   : 'text-muted-foreground border-transparent hover:text-foreground hover:border-border'
@@ -188,7 +189,7 @@ export const Navbar = () => {
           products ? 'hidden md:block' : 'hidden'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-8">
+        <div className="max-w-7xl mx-auto px-6 py-8 grid grid-cols-2 lg:grid-cols-5 gap-x-8 gap-y-8">
           {GROUPS.map(({ category, items }) => (
             <div key={category}>
               {/* A label, not a heading: as an h2 it put four headings ahead of
@@ -223,7 +224,7 @@ export const Navbar = () => {
         </div>
         <div className="border-t border-border bg-muted">
           <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between gap-4 font-mono text-xs">
-            <span className="text-muted-foreground">Every one of them MIT or Apache 2.0</span>
+            <span className="font-sans text-muted-foreground">Selat, Omni and Heimsense are MIT or Apache 2.0</span>
             <a
               href="https://github.com/weekndlabs"
               target="_blank"

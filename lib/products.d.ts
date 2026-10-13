@@ -10,7 +10,8 @@ export type Category =
   | 'Agent infrastructure'
   | 'Model routing'
   | 'Dev workflow'
-  | 'Desktop and foundations';
+  | 'Desktop and foundations'
+  | 'Applications';
 
 export interface Product {
   name: string;
