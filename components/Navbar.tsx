@@ -98,12 +98,15 @@ export const Navbar = () => {
         <Link
           href="/"
           onClick={() => setOpen(false)}
-          className="flex min-h-11 items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:text-brand transition-colors group"
+          className="flex min-h-11 items-center gap-2.5 font-display font-bold text-lg sm:text-xl text-foreground hover:opacity-80 transition-opacity"
         >
-          {/* No radius here. The mark carries its own silhouette, and a CSS corner
-              on top of a squircle clips the curve it already has. */}
-          <Image src="/logo.png" alt="" width={32} height={32} className="group-hover:opacity-80 transition-opacity" />
-          <span>WeekndLabs</span>
+          {/* The mark is an SVG with no ground of its own, so it sits on either
+              theme as is. The wordmark is type and not part of the image, which
+              is what lets "Weeknd" follow the foreground colour. */}
+          <Image src="/logo.svg" alt="" width={40} height={24} unoptimized priority />
+          <span>
+            Weeknd<span className="text-brand">Labs</span>
+          </span>
         </Link>
 
         <div
