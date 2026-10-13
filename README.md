@@ -23,8 +23,9 @@ grows. That is the same failure `lib/hero-count.test.js` was written for.
   `components/HeroGraph.tsx`. Agents on the left, one gateway in the middle,
   tools on the right, and particles carrying requests through it. Loaded through
   `next/dynamic` with `ssr: false`, so it stays out of the first load. It draws a
-  single static frame under `prefers-reduced-motion`, and stops entirely when the
-  tab is hidden or the canvas scrolls out of view.
+  single static frame under `prefers-reduced-motion`, stops when the tab is
+  hidden or the canvas scrolls out of view, and comes to rest on its own after
+  a few seconds until the pointer or a scroll wakes it.
 - **Live data**: stars, releases and contributors come from the GitHub API on an
   hourly revalidation. When a lookup fails the page drops the affected count
   rather than substituting a stale or partial number, and writes a `[github]` line to the

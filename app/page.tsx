@@ -1,12 +1,11 @@
 import { Button } from '@/components/Button';
-import { Card } from '@/components/Card';
 import { HeroVisual } from '@/components/HeroVisual';
 import { SectionFadeIn } from '@/components/SectionFadeIn';
 import { totalStars, starClause } from '@/lib/stars';
 import { releaseCount, uniqueContributors } from '@/lib/traction';
 import { githubHeaders, warnGithub } from '@/lib/github';
 import { CATEGORY_NOTES, PRODUCTS, byCategory, starRepos } from '@/lib/products';
-import type { ProductGroup } from '@/lib/products';
+import type { Product, ProductGroup } from '@/lib/products';
 
 export const revalidate = 3600;
 
@@ -14,41 +13,21 @@ export const revalidate = 3600;
 // all live in lib/products.js now. See issue #28.
 const PRODUCT_REPOS: string[] = starRepos();
 
-// The three an agent runs on get the stack section. Everything else is a row.
+// The three an agent runs on get the stack section, and the one with measured
+// results leads it. Everything else is a row further down.
 const STACK = PRODUCTS.filter((product) => product.layer);
+const LEAD = STACK.find((product) => product.figures);
+const REST = STACK.filter((product) => product !== LEAD);
 const COUNTED = PRODUCTS.filter((product) => product.repo).map((product) => product.name);
 
-const INSTALL = [
-  { label: 'start with selat', command: 'npx @fajarhide/selat' },
-  { label: 'or with omni', command: 'brew install fajarhide/tap/omni' },
-];
+const INSTALL: Record<string, string> = {
+  Selat: 'npx @fajarhide/selat',
+  Omni: 'brew install fajarhide/tap/omni',
+};
 
 // Already published on /terms-of-service. A link and not a form: a form needs
 // a mail route, spam handling and a success state, and none of that exists.
 const CONTACT = 'mailto:hi@weekndlabs.com';
-
-const FAQ = [
-  {
-    q: 'Is the stack open source?',
-    a: 'Yes. Selat and Omni are Apache 2.0 and Heimsense is MIT. The build you download is the one we run.',
-  },
-  {
-    q: 'Do the three layers need each other?',
-    a: 'No. Each is a separate product with its own install and its own release cycle. Run one, or all three under the same agent.',
-  },
-  {
-    q: 'How does WeekndLabs make money?',
-    a: 'Selat runs hosted for teams who would rather not operate a gateway, priced on tool calls rather than seats. GitHub Sponsors is the other channel. The self-hosted build has no paid edition.',
-  },
-  {
-    q: 'Can I check the numbers on this page?',
-    a: 'The counts come from the GitHub API and refresh every hour. Omni measures its savings on a recorded corpus and ships the same measurement, so it replays on your own history.',
-  },
-  {
-    q: 'How do I work with you?',
-    a: 'Write to hi@weekndlabs.com about partnerships, integrations or investment. Security reports go to security@weekndlabs.com.',
-  },
-];
 
 // Every count on the page comes through here, so a rate limit and a renamed
 // repo leave the same one-line trace. See issue #4.
@@ -91,30 +70,43 @@ async function getContributors(repo: string): Promise<string[] | null> {
 
 const each = <T,>(get: (repo: string) => Promise<T>) => Promise.all(PRODUCT_REPOS.map(get));
 
-// Every section opens the same way: the heading on the rule, and on the right
-// the one link that section is asking you to follow.
-function SectionHeading({ title, action }: { title: string; action?: { label: string; href: string } }) {
+const link =
+  'text-brand underline underline-offset-4 hover:text-brand-strong transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm';
+
+const external = { target: '_blank', rel: 'noopener noreferrer' } as const;
+
+/** Where a product lives, without the scheme: the label of its link. */
+const host = (href: string) => href.replace(/^https:\/\//, '').replace(/\/$/, '');
+
+// Name, version, what it does, what it sits in front of, how to get it. The
+// lead and the two beside it share this and differ only in type size.
+function Layer({ product, lead = false }: { product: Product; lead?: boolean }) {
   return (
-    <div className="mb-8 md:mb-12 flex items-end justify-between gap-6 border-b border-border pb-4">
-      <h2 className="font-display text-2xl md:text-3xl text-foreground">{title}</h2>
-      {action && (
-        <a
-          href={action.href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-mono text-xs text-muted-foreground hover:text-brand transition-colors shrink-0 pb-1"
-        >
-          {action.label}
+    <div>
+      <p className="text-sm font-medium text-muted-foreground">{product.layer}</p>
+      {/* The version sits beside the heading, not in it, so the heading an
+          engine or a screen reader gets is the name alone. */}
+      <div className="mt-1 flex items-baseline gap-3">
+        <h3 className={`font-display text-foreground ${lead ? 'text-3xl md:text-4xl' : 'text-2xl'}`}>{product.name}</h3>
+        <span className="font-mono text-xs text-muted-foreground">{product.version}</span>
+      </div>
+      <p className={`mt-3 text-muted-foreground leading-relaxed text-pretty ${lead ? 'max-w-xl text-lg' : ''}`}>
+        {product.description}
+      </p>
+      <p className="mt-3 text-sm text-muted-foreground">
+        Sits in front of <span className="text-foreground">{product.upstream}</span>.
+      </p>
+      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-2">
+        {INSTALL[product.name] && (
+          <code className="rounded-sm bg-muted px-3 py-2 font-mono text-sm text-foreground">{INSTALL[product.name]}</code>
+        )}
+        <a href={product.href} {...external} className={`inline-flex min-h-11 items-center font-mono text-sm ${link}`}>
+          {host(product.href)}
         </a>
-      )}
+      </div>
     </div>
   );
 }
-
-const Connector = () => <div className="mx-auto h-5 w-px bg-border" aria-hidden="true" />;
-
-const inlineLink =
-  'text-brand underline underline-offset-4 hover:text-brand-strong transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand rounded-sm';
 
 export default async function Home() {
   const [stars, releases, contributors] = await Promise.all([
@@ -123,29 +115,29 @@ export default async function Home() {
     each(getContributors).then(uniqueContributors),
   ]);
 
-  // A count that could not be read in full is dropped, tile and all.
+  // A count that could not be read in full is dropped from the sentence.
   const proof = [
-    { value: stars, label: 'GitHub stars' },
+    { value: stars, label: 'stars' },
     { value: contributors, label: 'contributors' },
-    { value: releases, label: 'releases shipped' },
-  ].filter((tile): tile is { value: number; label: string } => tile.value !== null);
+    { value: releases, label: 'releases' },
+  ].filter((count): count is { value: number; label: string } => count.value !== null);
 
   return (
-    <div className="flex flex-col gap-20 md:gap-28 pb-20 md:pb-28 top-0 relative">
+    <div className="pb-24 md:pb-32">
       {/* Wider than everything below it, and deliberately so: this is the only
-          two-column section on the page, and the graph needs the second half. */}
+          section with a picture, and the graph needs the second half. */}
       <SectionFadeIn className="pt-16 md:pt-24 px-6 max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
         <div className="rise flex flex-col items-center text-center lg:items-start lg:text-left">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-display text-foreground mb-6 leading-tight tracking-tight text-balance">
             Reliable infrastructure for the agentic era<span className="text-brand">.</span>
           </h1>
+          {/* Opens with the name and a verb, so the sentence still says what
+              this is when an engine quotes it with nothing around it. */}
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mb-8 md:mb-10 leading-relaxed text-pretty">
-            A gateway for the credentials your agents hold, a context layer for what they read
-            twice, and routing for the models they call. All of it open source under MIT and
-            Apache 2.0{starClause(stars)}. The build you run yourself is the complete one, never a
-            trial, and every number we publish is
-            measured on a real corpus and replays
-            on yours.
+            WeekndLabs builds open-source infrastructure for AI agents: a gateway for the
+            credentials they hold, a context layer for what they read twice, and routing for the
+            models they call. All of it under MIT and Apache 2.0{starClause(stars)}. Every number
+            we publish is measured on a real corpus and replays on yours.
           </p>
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start w-full sm:w-auto">
             <Button href={CONTACT} variant="filled">
@@ -164,101 +156,85 @@ export default async function Home() {
         </div>
       </SectionFadeIn>
 
-      <SectionFadeIn id="stack" className="px-6 max-w-5xl mx-auto w-full">
-        <SectionHeading title="One stack under your agent" action={{ label: 'github.com/weekndlabs', href: 'https://github.com/weekndlabs' }} />
-        <p className="max-w-3xl text-foreground leading-relaxed text-pretty mb-8 md:mb-10">
-          An agent needs credentials for the services it calls, a way to stop paying for what it
-          has already read, and a model to run on. Each layer is its own product and runs without
-          the other two.
-        </p>
-
-        {/* Read top to bottom: the agent, the layer it talks to, what that layer
-            sits in front of. Static on purpose. The hero already carries the
-            moving version of this picture. */}
-        <div className="rounded-lg border border-border px-4 py-3 text-center">
-          <p className="font-mono text-xs uppercase text-muted-foreground">Your agent</p>
-          <p className="mt-1 text-sm text-foreground">Claude Code, Claude Desktop, or a runtime you wrote</p>
+      {/* No cards. Three equal cards said the three products weigh the same,
+          and they do not: one has measurements and users, so it gets the width
+          and the other two sit beside each other under it. */}
+      <SectionFadeIn id="stack" className="mt-24 md:mt-36 px-6 max-w-5xl mx-auto w-full">
+        <div className="grid gap-4 lg:grid-cols-5 lg:gap-12">
+          <h2 className="lg:col-span-2 font-display text-3xl md:text-4xl text-foreground text-balance">
+            One stack under your agent
+          </h2>
+          <p className="lg:col-span-3 text-lg text-muted-foreground leading-relaxed text-pretty">
+            An agent needs credentials for the services it calls, a way to stop paying for what it
+            has already read, and a model to run on. Each layer is its own product and runs
+            without the other two.
+          </p>
         </div>
-        <ol className="reveal-each grid grid-cols-1 md:grid-cols-3 gap-x-6 list-none pl-0">
-          {STACK.map((product) => (
-            <li key={product.name} className="flex flex-col">
-              <Connector />
-              <p className="font-mono text-xs uppercase text-brand text-center mb-2">{product.layer}</p>
-              <div className="flex-grow">
-                <Card
-                  title={product.name}
-                  description={product.description}
-                  version={product.version}
-                  tags={product.tags}
-                  linkHref={product.href}
-                />
-              </div>
-              <Connector />
-              <p className="rounded-lg border border-dashed border-border px-3 py-2.5 text-center font-mono text-xs text-muted-foreground">
-                {product.upstream}
-              </p>
-            </li>
-          ))}
-        </ol>
 
-        <div className="mt-8 md:mt-10 grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          {INSTALL.map(({ label, command }) => (
-            <div key={label} className="flex items-center gap-3">
-              <p className="font-mono text-xs text-muted-foreground shrink-0">{label}</p>
-              <pre className="border border-border bg-muted rounded-lg px-4 py-3 font-mono text-sm text-brand overflow-x-auto flex-grow">
-                <code>{command}</code>
-              </pre>
+        {LEAD && (
+          <div className="mt-12 md:mt-16 grid gap-10 border-y border-border py-10 md:py-12 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-7">
+              <Layer product={LEAD} lead />
+            </div>
+            <dl className="lg:col-span-5 flex flex-col justify-center gap-8">
+              {LEAD.figures?.map(({ value, label }) => (
+                <div key={label} className="flex flex-col-reverse">
+                  <dt className="mt-1 text-muted-foreground">{label}</dt>
+                  <dd className="ml-0 font-mono text-5xl md:text-6xl tracking-tight text-foreground">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        )}
+
+        <div className="reveal-each grid gap-10 py-10 md:grid-cols-2 md:gap-0 md:py-12 md:divide-x md:divide-border">
+          {REST.map((product, i) => (
+            <div key={product.name} className={i === 0 ? 'md:pr-12' : 'md:pl-12'}>
+              <Layer product={product} />
             </div>
           ))}
         </div>
-      </SectionFadeIn>
 
-      {proof.length > 0 && (
-        <SectionFadeIn id="proof" className="px-6 max-w-5xl mx-auto w-full">
-          <SectionHeading title="In the open" />
-          <dl className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6">
-            {proof.map(({ value, label }) => (
-              <div key={label} className="rounded-lg border border-border bg-muted p-6 flex flex-col-reverse">
-                <dt className="font-mono text-xs uppercase text-muted-foreground mt-2">{label}</dt>
-                <dd className="font-display text-4xl md:text-5xl text-foreground ml-0">
-                  {value.toLocaleString('en-US')}
-                </dd>
-              </div>
-            ))}
-          </dl>
-          <p className="mt-4 text-sm text-muted-foreground max-w-3xl">
-            Counted across {COUNTED.slice(0, -1).join(', ')} and {COUNTED.at(-1)}, read from the
-            GitHub API every hour. A count we cannot read in full is left off the page.
+        {proof.length > 0 && (
+          <p className="border-t border-border pt-6 text-muted-foreground leading-relaxed">
+            {proof.map(({ value, label }, i) => (
+              <span key={label}>
+                {i > 0 && (i === proof.length - 1 ? ' and ' : ', ')}
+                <span className="font-mono text-foreground">{value.toLocaleString('en-US')}</span> {label}
+              </span>
+            ))}{' '}
+            across {COUNTED.slice(0, -1).join(', ')} and {COUNTED.at(-1)}, read from the GitHub API
+            every hour. A count we cannot read in full is left out.
           </p>
-        </SectionFadeIn>
-      )}
+        )}
+      </SectionFadeIn>
 
       {/* Selat takes money and the landing page has to say so, or the lab reads
           as a shelf rather than a company. No pricing table: that lives on the
           product's own site. See #36. */}
-      <SectionFadeIn id="model" className="px-6 max-w-5xl mx-auto w-full">
-        <SectionHeading title="How it pays for itself" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-          <div className="rounded-lg border border-border bg-muted p-6 md:p-8">
-            <h3 className="font-display text-xl text-foreground mb-3">Run it yourself</h3>
-            <p className="text-muted-foreground leading-relaxed">
+      <SectionFadeIn id="model" className="mt-20 md:mt-28 px-6 max-w-5xl mx-auto w-full">
+        <h2 className="font-display text-2xl md:text-3xl text-foreground">How it pays for itself</h2>
+        <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-0 md:divide-x md:divide-border">
+          <div className="md:pr-12">
+            <h3 className="font-display text-xl text-foreground">Run it yourself</h3>
+            <p className="mt-3 text-muted-foreground leading-relaxed">
               The build you download is the whole product, on your own machine, with no account
               and no paid edition behind it.{' '}
-              <a href="/philosophy" className={inlineLink}>
+              <a href="/philosophy" className={link}>
                 Read the commitment
               </a>
               .
             </p>
           </div>
-          <div className="rounded-lg border border-border bg-muted p-6 md:p-8">
-            <h3 className="font-display text-xl text-foreground mb-3">Or we run it</h3>
-            <p className="text-muted-foreground leading-relaxed">
-              <a href="https://selat.weekndlabs.com/app" target="_blank" rel="noopener noreferrer" className={inlineLink}>
+          <div className="md:pl-12">
+            <h3 className="font-display text-xl text-foreground">Or we run it</h3>
+            <p className="mt-3 text-muted-foreground leading-relaxed">
+              <a href="https://selat.weekndlabs.com/app" {...external} className={link}>
                 Selat also runs hosted
               </a>{' '}
               for teams who would rather not operate a gateway, priced on tool calls rather than
               seats.{' '}
-              <a href="https://github.com/sponsors/fajarhide" target="_blank" rel="noopener noreferrer" className={inlineLink}>
+              <a href="https://github.com/sponsors/fajarhide" {...external} className={link}>
                 GitHub Sponsors
               </a>{' '}
               is the other channel.
@@ -267,23 +243,23 @@ export default async function Home() {
         </div>
       </SectionFadeIn>
 
-      <SectionFadeIn id="products" className="px-6 max-w-5xl mx-auto w-full">
-        <SectionHeading title="Also from the lab" />
-        <div className="flex flex-col gap-12 md:gap-16">
+      {/* The one boxed list on the page. Rows, because a row cannot leave a
+          hole in a grid. */}
+      <SectionFadeIn id="products" className="mt-24 md:mt-32 px-6 max-w-5xl mx-auto w-full">
+        <h2 className="font-display text-2xl md:text-3xl text-foreground">Also from the lab</h2>
+        <div className="mt-8 flex flex-col gap-10">
           {byCategory(PRODUCTS.filter((product) => !product.layer)).map(({ category, items }: ProductGroup) => (
             <div key={category}>
-              <div className="mb-5 md:mb-6">
-                <h3 className="font-mono text-xs uppercase text-muted-foreground">{category}</h3>
-                <p className="mt-2.5 max-w-3xl text-foreground leading-relaxed text-pretty">
-                  {CATEGORY_NOTES[category]}
-                </p>
-              </div>
+              <h3 className="text-sm font-medium text-muted-foreground">{category}</h3>
+              <p className="mt-1.5 mb-4 max-w-3xl text-foreground leading-relaxed text-pretty">
+                {CATEGORY_NOTES[category]}
+              </p>
               <ul className="border border-border rounded-lg bg-muted divide-y divide-border list-none pl-0 overflow-hidden">
                 {items.map((product) => (
                   <li key={product.name}>
                     <a
                       href={product.href}
-                      {...(product.href.startsWith('/') ? {} : { target: '_blank', rel: 'noopener noreferrer' })}
+                      {...(product.href.startsWith('/') ? {} : external)}
                       className="group flex flex-col gap-1 px-4 py-4 sm:flex-row sm:items-baseline sm:gap-6 hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset"
                     >
                       <span className="font-display text-foreground w-40 shrink-0 group-hover:text-brand transition-colors">
@@ -302,42 +278,15 @@ export default async function Home() {
         </div>
       </SectionFadeIn>
 
-      <SectionFadeIn id="who" className="px-6 max-w-5xl mx-auto w-full">
-        <SectionHeading title="Who builds it" />
-        <p className="max-w-3xl text-foreground leading-relaxed text-pretty">
-          WeekndLabs is built in Indonesia by{' '}
-          <a href="https://github.com/fajarhide" target="_blank" rel="noopener noreferrer" className={inlineLink}>
-            Fajar Hidayat
-          </a>{' '}
-          and the contributors who send pull requests. Releases, issues and reviews for the
-          open-source products are public on GitHub.
-        </p>
-      </SectionFadeIn>
-
-      <SectionFadeIn id="faq" className="px-6 max-w-5xl mx-auto w-full">
-        <SectionHeading title="Questions" />
-        <div className="border border-border rounded-lg bg-muted divide-y divide-border overflow-hidden">
-          {FAQ.map(({ q, a }) => (
-            <details key={q} className="group">
-              <summary className="cursor-pointer list-none px-4 py-4 flex items-baseline justify-between gap-6 text-foreground hover:bg-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-inset [&::-webkit-details-marker]:hidden">
-                {q}
-                <span className="font-mono text-muted-foreground group-open:rotate-45 transition-transform" aria-hidden="true">
-                  +
-                </span>
-              </summary>
-              <p className="px-4 pb-4 max-w-3xl text-muted-foreground leading-relaxed">{a}</p>
-            </details>
-          ))}
-        </div>
-      </SectionFadeIn>
-
-      <SectionFadeIn id="contact" className="px-6 max-w-5xl mx-auto w-full">
-        <div className="rounded-lg border border-border bg-muted p-8 md:p-12 flex flex-col md:flex-row md:items-center justify-between gap-8">
+      {/* The page ends on the one thing it asks for. Open, not boxed, and the
+          only place below the hero where the type goes large again. */}
+      <SectionFadeIn id="contact" className="mt-28 md:mt-40 px-6 max-w-5xl mx-auto w-full">
+        <div className="flex flex-col gap-8 border-t border-border pt-12 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
+            <h2 className="font-display text-4xl md:text-5xl text-foreground tracking-tight">
               Work with us<span className="text-brand">.</span>
             </h2>
-            <p className="text-muted-foreground leading-relaxed">
+            <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
               Partnerships, integrations and investment conversations start with an email to
               hi@weekndlabs.com.
             </p>

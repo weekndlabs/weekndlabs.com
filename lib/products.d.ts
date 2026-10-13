@@ -19,7 +19,8 @@ export interface Product {
   href: string;
   blurb: string;
   description: string;
-  tags?: string[];
+  /** Measured results. The product that carries them leads the stack section. */
+  figures?: { value: string; label: string }[];
   /** Set on the three that make up the agent stack. */
   layer?: string;
   upstream?: string;

@@ -67,6 +67,10 @@ const SEGMENTS = 24;
 
 const PARTICLES = 950;
 
+/** Seconds of full motion after the graph is woken, then seconds to come to rest. */
+const AWAKE = 14;
+const WIND_DOWN = 3;
+
 /** How much of each end of a path the request fades in and out over. */
 const FADE = 0.12;
 
@@ -250,6 +254,10 @@ export default function HeroGraph() {
     trafficCloud.frustumCulled = false;
     graph.add(trafficCloud);
 
+    // Draws one frame at the current moment. Reassigned once the frame
+    // function exists; until then there is nothing to draw with.
+    let redraw = () => {};
+
     const brand = new Color();
     const ground = new Color();
     const tint = new Color();
@@ -273,7 +281,12 @@ export default function HeroGraph() {
 
     // The toggle flips data-theme on <html>, so every token under it changes
     // without a remount. Without this the graph keeps the palette it booted on.
-    const themeWatcher = new MutationObserver(paintTokens);
+    // The redraw matters once the graph has come to rest: with no loop running,
+    // new colours would otherwise wait for the next wake to show.
+    const themeWatcher = new MutationObserver(() => {
+      paintTokens();
+      redraw();
+    });
     themeWatcher.observe(document.documentElement, {
       attributes: true,
       attributeFilter: ['data-theme'],
@@ -285,6 +298,8 @@ export default function HeroGraph() {
       camera.aspect = clientWidth / clientHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(clientWidth, clientHeight, false);
+      // setSize clears the canvas, and at rest nothing would paint it again.
+      redraw();
     };
     const sizeWatcher = new ResizeObserver(resize);
     sizeWatcher.observe(el);
@@ -295,6 +310,7 @@ export default function HeroGraph() {
     const aim = { x: 0, y: 0 };
     const eased = { x: 0, y: 0 };
     const track = (e: PointerEvent) => {
+      wake();
       const box = el.getBoundingClientRect();
       aim.x = ((e.clientX - box.left) / box.width - 0.5) * 2;
       aim.y = ((e.clientY - box.top) / box.height - 0.5) * 2;
@@ -375,36 +391,67 @@ export default function HeroGraph() {
     let frame = 0;
     let visible = true;
 
-    const loop = () => {
-      frame = requestAnimationFrame(loop);
-      drawAt(performance.now() / 1000);
-    };
+    // The scene keeps its own clock, so it can slow to a stop and pick up from
+    // the same instant rather than jumping to wherever wall time has got to.
+    let clock = 0;
+    let last = 0;
+    let wokeAt = 0;
 
     const stop = () => {
       if (frame) cancelAnimationFrame(frame);
       frame = 0;
     };
 
+    // It runs for a while and then comes to rest. A loop with no end keeps
+    // pulling the eye off a page someone is trying to read, and by then the
+    // picture has made its point.
+    const loop = () => {
+      frame = requestAnimationFrame(loop);
+      const now = performance.now() / 1000;
+      const since = now - wokeAt;
+      const pace = since < AWAKE ? 1 : Math.max(0, 1 - (since - AWAKE) / WIND_DOWN);
+      // Capped, so a tab that was throttled does not lurch forward on return.
+      clock += Math.min(now - last, 0.1) * pace;
+      last = now;
+      drawAt(clock);
+      if (pace === 0) stop();
+    };
+
     // Three conditions gate the loop, and any one of them is enough to stop it:
     // a reduced-motion preference, a hidden tab, and a canvas scrolled past.
     const settle = () => {
       const shouldRun = visible && !document.hidden && !stillness.matches;
-      if (shouldRun && !frame) loop();
+      if (shouldRun && !frame) {
+        last = performance.now() / 1000;
+        loop();
+      }
       if (!shouldRun) {
         stop();
-        drawAt(0);
+        drawAt(stillness.matches ? 0 : clock);
       }
+    };
+
+    // Coming into view and moving the pointer over it are the two things that
+    // start it again.
+    function wake() {
+      wokeAt = performance.now() / 1000;
+      settle();
+    }
+
+    redraw = () => {
+      if (!frame) drawAt(stillness.matches ? 0 : clock);
     };
 
     const viewWatcher = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      settle();
+      if (visible) wake();
+      else settle();
     });
     viewWatcher.observe(el);
 
     document.addEventListener('visibilitychange', settle);
     stillness.addEventListener('change', settle);
-    settle();
+    wake();
 
     return () => {
       stop();

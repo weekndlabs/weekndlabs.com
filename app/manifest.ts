@@ -1,10 +1,11 @@
 import { MetadataRoute } from 'next';
+import { SITE } from '@/lib/site';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'WeekndLabs',
-    short_name: 'WeekndLabs',
-    description: 'WeekndLabs builds developer tools for the agentic era. Five shipped products, open source, built in Indonesia.',
+    name: SITE.name,
+    short_name: SITE.name,
+    description: SITE.description,
     start_url: '/',
     display: 'standalone',
     background_color: '#141416',
