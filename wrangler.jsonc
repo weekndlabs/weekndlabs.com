@@ -10,6 +10,7 @@
     // Every request goes through worker.js so www can redirect by host.
     "run_worker_first": true
   },
+  "services": [{ "binding": "DESIGN", "service": "weekndlabs-design" }],
   "routes": [
     { "pattern": "weekndlabs.com/*", "zone_name": "weekndlabs.com" },
     { "pattern": "www.weekndlabs.com/*", "zone_name": "weekndlabs.com" }

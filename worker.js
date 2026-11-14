@@ -1,5 +1,6 @@
-// Serves the static export in out/ and proxies the design docs, which are a
-// separate Astro build at design.weekndlabs.com.
+// Serves the static export in out/ and the design docs, which are a separate
+// Astro build in the weekndlabs-design Worker, reached through the DESIGN
+// service binding.
 const DESIGN_SITE = 'https://design.weekndlabs.com';
 
 export default {
@@ -16,7 +17,7 @@ export default {
     const p = url.pathname;
     if (p === '/design' || p.startsWith('/design/') || p.startsWith('/_astro/')) {
       const target = DESIGN_SITE + (p.startsWith('/_astro/') ? p : p.slice('/design'.length) || '/') + url.search;
-      return fetch(new Request(target, request));
+      return env.DESIGN.fetch(new Request(target, request));
     }
 
     const res = await env.ASSETS.fetch(request);
