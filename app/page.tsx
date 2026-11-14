@@ -205,7 +205,7 @@ export default async function Home() {
               </span>
             ))}{' '}
             across {COUNTED.slice(0, -1).join(', ')} and {COUNTED.at(-1)}, read from the GitHub API
-            every hour. A count we cannot read in full is left out.
+            when the site is built. A count we cannot read in full is left out.
           </p>
         )}
       </SectionFadeIn>
