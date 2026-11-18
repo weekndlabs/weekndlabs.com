@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
-// A static export served as Worker static assets (see worker.js). The /design
-// proxy that used to live in rewrites() is in worker.js now, because a static
-// export has no server to run rewrites.
+// A static export. The web server in front of it proxies /design and /_astro to
+// design.weekndlabs.com, because a static export has no server to run rewrites.
 const nextConfig = {
   reactStrictMode: true,
   output: "export",

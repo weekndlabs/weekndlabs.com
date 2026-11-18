@@ -67,6 +67,18 @@ guard already shipped once: `lib/stars.test.js` for a hardcoded star count,
 `lib/hero-count.test.js` for a tool count that went stale twice, and
 `lib/readme.test.js` for this file.
 
+## Deployment
+
+The site ships as the static export in `out/`, served from our own server
+behind Cloudflare. That server also redirects `www`, proxies `/design` and
+`/_astro` to the design docs, and serves pages without the `.html` suffix.
+
+Merging to `main` does not deploy. The owner deploys from the infra repo, which
+builds `origin/main` and swaps the new `out/` in, keeping the previous one for
+rollback. There is no Worker any more, so do not run `wrangler deploy`: the
+Worker still exists for rollback, and redeploying it with routes would take the
+traffic back.
+
 ## Licensing
 
 The tools and this site are open source under the [MIT License](LICENSE).
